@@ -25,7 +25,6 @@
   <url>http://feeds.just-map-it.com/</url>
   
   <modules>
-    <module>feeds-flex</module>
     <module>feeds-web</module>
   </modules>
 
