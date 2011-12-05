@@ -38,7 +38,7 @@
         allowNetworking: "all", quality: "high", menu: "true", 
         flashvars: fv
  	};
-  	gadgets.flash.embedFlash('http://feeds.just-map-it.com/client/wps-flex-1.0-SNAPSHOT.swf', 'wps-feeds', 10, params);
+  	gadgets.flash.embedFlash('http://feeds.just-map-it.com/client/jmi-flex-1.0-SNAPSHOT.swf', 'wps-feeds', 10, params);
 
   function getMap() {
   	 return document.getElementById('wps-feeds').childNodes[0];

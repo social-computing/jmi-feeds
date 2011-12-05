@@ -60,7 +60,7 @@ params.bgcolor = "#FFFFFF";
 params.allowscriptaccess = "always";
 params.allowfullscreen = "true";
 swfobject.embedSWF(
-    "http://feeds.just-map-it.com/client/wps-flex-1.0-SNAPSHOT.swf", mapid, 
+    "http://feeds.just-map-it.com/client/jmi-flex-1.0-SNAPSHOT.swf", mapid, 
     "<%=request.getParameter("w")%>", "<%=request.getParameter("h")%>", 
     "10.0.0", "http://feeds.just-map-it.com/client/playerProductInstall.swf", 
     flashvars, params);

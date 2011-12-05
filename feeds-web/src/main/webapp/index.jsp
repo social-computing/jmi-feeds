@@ -105,8 +105,8 @@ $(document).ready(function() {
     var xiSwfUrlStr = "./client/playerProductInstall.swf";
     var flashvars = {};
     flashvars.allowDomain = "*";
-    //flashvars.wpsserverurl = "http://localhost:8080/wps-server";
-    //flashvars.track = "http://localhost:8080/web-feeds/rest/feeds/record.json";
+    //flashvars.wpsserverurl = "http://localhost:8080/jmi-server";
+    //flashvars.track = "http://localhost:8080/feeds-web/rest/feeds/record.json";
     flashvars.wpsserverurl = "http://server.just-map-it.com/";
     flashvars.track = "http://feeds.just-map-it.com/rest/feeds/record.json";
     flashvars.wpsplanname = "Feeds";
@@ -123,7 +123,7 @@ $(document).ready(function() {
     attributes.name = "wps-feeds";
     attributes.align = "middle";
     swfobject.embedSWF(
-        "./client/wps-flex-1.0-SNAPSHOT.swf", "flashContent", 
+        "./client/jmi-flex-1.0-SNAPSHOT.swf", "flashContent", 
         "100%", "100%", 
         swfVersionStr, xiSwfUrlStr, 
         flashvars, params, attributes);
@@ -214,14 +214,14 @@ You can also add Just Map It! Feeds to: <h3><a href="http://www.google.com/ig/ad
  </div>
  <noscript>
    <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%" id="wps-feeds">
-       <param name="movie" value="./client/wps-flex-1.0-SNAPSHOT.swf" />
+       <param name="movie" value="./client/jmi-flex-1.0-SNAPSHOT.swf" />
        <param name="quality" value="high" />
        <param name="bgcolor" value="#FFFFFF" />
        <param name="allowScriptAccess" value="always" />
        <param name="allowFullScreen" value="true" />
        <param name="wmode" value="transparent" />
        <!--[if !IE]>-->
-       <object type="application/x-shockwave-flash" data="./client/wps-flex-1.0-SNAPSHOT.swf" width="100%" height="100%">
+       <object type="application/x-shockwave-flash" data="./client/jmi-flex-1.0-SNAPSHOT.swf" width="100%" height="100%">
            <param name="quality" value="high" />
            <param name="bgcolor" value="#FFFFFF" />
            <param name="allowScriptAccess" value="sameDomain" />
