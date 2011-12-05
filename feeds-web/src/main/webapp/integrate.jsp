@@ -51,7 +51,7 @@ if( h==null || h.length() == 0) h = "500";
 <tr><td style="vertical-align:top;">
 <div id="formulaire">
 	<h2>1 - Complete the form</h2>
-	<form method="GET">
+	<form method="get">
 	<table>
 	<tr><td>URL(s) (comma separated) *</td><td><input type="text" name="feed" size="80" value="<%=feed%>"></td></tr>
 	<tr><td>Width *</td><td><input type="text" name="w" size="10" value="<%=w%>"></td></tr>
