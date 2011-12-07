@@ -111,7 +111,7 @@ $(document).ready(function() {
     flashvars.track = "http://feeds.just-map-it.com/rest/feeds/record.json";
     flashvars.wpsplanname = "Feeds";
     flashvars.analysisProfile = "GlobalProfile";
-    flashvars.feed = "<%=java.net.URLEncoder.encode(feed, "UTF-8")%>";
+    flashvars.feed = "<%=feed%>";
     var params = {};
     params.quality = "high";
     params.bgcolor = "#FFFFFF";
