@@ -193,7 +193,7 @@ for (Feed f : feeds) {%><div class="vignette">
 <%long max = (feedManager.count( "true") / 10) + 1;
 for( long i = 0; i < max; ++i) { %>
 <li <%=(numpage==i? "class='active'": "")%>><a href=".<%=(i==0? "" : "/?page=" + i)%>"><%=i+1%></a></li>
-<%} for( long i = max+1; i < 20; ++i) { %>
+<%} for( long i = max; i < 20; ++i) { %>
 <li class='disabled'><a ><%=i+1%></a></li>
 <%}%></ul></div>
 <div class="slogan">
