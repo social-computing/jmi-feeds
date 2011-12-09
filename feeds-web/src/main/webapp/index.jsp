@@ -44,7 +44,7 @@ $(document).ready(function() {
 	  var map = document.getElementById("wps-feeds");
 	  var titles = map.getArrayProperty( "$FEEDS_TITLES");
 	  if( titles) {
-	  	document.title = 'Just Map It! Feeds - ' + titles.join( ', ');
+	  	document.title = titles.join( ', ') + ' | Just Map It! Feeds - ';
 		if( map.getProperty( "$analysisProfile") == "GlobalProfile") {
 			document.getElementById("message").innerHTML = titles.join( ', ');
 		}
@@ -162,9 +162,9 @@ swfobject.createCSS("#flashContent", "display:block;text-align:left;");
 <table border="0"><tr>
 	<td class="social"><g:plusone size="medium" href="http://feeds.just-map-it.com/"></g:plusone></td>
 	<!--td class="social"><a title="Post to Google Buzz" class="google-buzz-button" href="http://www.google.com/buzz/post" data-button-style="small-count" data-url="http://feeds.just-map-it.com"></a><script type="text/javascript" src="http://www.google.com/buzz/api/button.js"></script></td-->
-	<td class="social"><fb:like href="<%=request.getRequestURL().toString()+(request.getQueryString() != null? "?"+request.getQueryString() : "")%>" send="true" layout="button_count" width="450" show_faces="false" font="arial"></fb:like></td>
+	<td class="social"><fb:like href="http://feeds.just-map-it.com<%=(request.getQueryString() != null? "?"+request.getQueryString() : "")%>" send="true" layout="button_count" width="450" show_faces="false" font="arial"></fb:like></td>
 </tr><tr>
-	<td class="social"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script></td>
+	<td class="social"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://feeds.just-map-it.com<%=(request.getQueryString() != null? "?"+request.getQueryString() : "")%>" data-lang="en">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></td>
 	<td class="social"><script src="http://platform.linkedin.com/in.js" type="text/javascript"></script><script type="IN/Share" data-counter="right"></script></td>
 </tr></table>
 </td>
