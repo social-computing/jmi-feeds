@@ -5,7 +5,9 @@ var embedid = "embed" + d.getTime();
 var messageid = "message" + d.getTime();
 var mapid = "map" + d.getTime();
 function display( message, error) {
-<% String m=request.getParameter("m");
+<%String url = request.getParameter("url"); 
+if( url == null) url= "";
+String m=request.getParameter("m");
 if( m != null && m.length() > 0) {%>
 if( document.getElementById('<%=m%>'))
  document.getElementById('<%=m%>').innerHTML = message;
@@ -24,35 +26,41 @@ function JMIF_error( error) {
 function JMIF_Navigate( url) {
 	window.open( url, "_blank");
 }
-function JMIF_Focus( args)
-{
+function JMIF_Focus( args) {
 	var parameters = {};
-	parameters["entityId"] = args[0];
-	parameters["feed"] = args[2];
- 	parameters["trackUrl"] = "";
+	JMIF_CompleteParameters( parameters);
+	parameters.entityId = args[0];
+	parameters.feed = args[2];
+ 	parameters.track = "";
 	document.getElementById(mapid).compute( parameters);
 	display( "<i>Focus on category:</i> " + args[1], false);
 }
- function JMIF_Center( args)
- {
+ function JMIF_Center( args) {
 	var parameters = {};
-	parameters["attributeId"] = args[0];
-	parameters["analysisProfile"] = "DiscoveryProfile";
-	parameters["feed"] = args[2];
- 	parameters["trackUrl"] = "";
+	JMIF_CompleteParameters( parameters);
+	parameters.attributeId = args[0];
+	parameters.analysisProfile = "DiscoveryProfile";
+	parameters.feed = args[2];
+ 	parameters.track = "";
  	document.getElementById(mapid).compute( parameters);
 	display( "<i>Centered on item:</i> " + args[1], false);
  }
+function JMIF_CompleteParameters( parameters) {
+	 parameters.allowDomain = "*";
+	 parameters.wpsserverurl = "http://server.just-map-it.com";
+     parameters.feedsserverurl = "http://feeds.just-map-it.com";
+	 parameters.wpsplanname = "Feeds";
+	 parameters.site = "";
+	 parameters.emptyCallback = "JMIF_empty";
+	 parameters.errorCallback = "JMIF_error";
+	 parameters.jsessionid = '<%=session.getId()%>';
+} 
 <%if(request.getParameter("url") != null && request.getParameter("url").length()>0){ %>
 var flashvars = {};
-flashvars.allowDomain = "*";
-flashvars.wpsserverurl = "http://server.just-map-it.com/";
-flashvars.wpsplanname = "Feeds";
+JMIF_CompleteParameters( flashvars);
 flashvars.analysisProfile = "GlobalProfile";
-flashvars.emptyCallback = "JMIF_empty";
-flashvars.errorCallback = "JMIF_error";
-flashvars.feed = "<%=java.net.URLEncoder.encode(request.getParameter("url"), "UTF-8")%>";
-flashvars.trackUrl = "http://feeds.just-map-it.com/rest/sites/record.json";
+flashvars.feed = "<%=java.net.URLEncoder.encode(url, "UTF-8")%>";
+flashvars.track = "site";
 flashvars.site = window.location.href;
 var params = {};
 params.quality = "high";

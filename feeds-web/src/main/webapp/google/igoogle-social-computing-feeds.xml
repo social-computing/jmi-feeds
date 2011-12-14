@@ -15,15 +15,12 @@
 <div id='wps-feeds'></div>
 <script type="text/javascript" language="javascript"> 
  var prefs = new gadgets.Prefs();
- var flashvars = {
-	allowDomain: "*",
-	wpsserverurl: "http%3A%2F%2Fserver.just-map-it.com%2F",
-	wpsplanname: "Feeds",
-	analysisProfile: "GlobalProfile",
-	feed: prefs.getString( "feed")
-   };
-   var parameters = gadgets.views ? gadgets.views.getParams() : null;
-   if( parameters) {
+ var flashvars = {};
+ JMIF_CompleteParameters( flashvars);
+ flashvars.analysisProfile = "GlobalProfile";
+ flashvars.feed = prefs.getString( "feed");
+  var parameters = gadgets.views ? gadgets.views.getParams() : null;
+  if( parameters) {
     	for (var prop in parameters) {
     		flashvars[prop] = parameters[prop];
    		}
@@ -44,7 +41,7 @@
   	 return document.getElementById('wps-feeds').childNodes[0];
   }
     
-  function ready() {
+  function JMIF_ready() {
     var map = getMap();
     var titles = map.getArrayProperty( "$FEEDS_TITLES");
 	if( map.getProperty( "$analysisProfile") == "GlobalProfile" && titles) {
@@ -54,14 +51,11 @@
  	 widget.setTitle( 'Just Map It! Feeds');
     }
   }
-  function status( status) {
-   // do something here
-  }
-  function empty() {
+  function JMIF_empty() {
   	 gadgets.window.setTitle( 'Just Map It! Feeds');
  	 alert( "Sorry, the map is empty. Does the feed contains categories?");
   }
-  function error( error) {
+  function JMIF_error( error) {
   	gadgets.window.setTitle( 'Just Map It! Feeds');
    	alert( "Sorry, an error occured. Is this URL correct?");
   }
@@ -71,18 +65,32 @@
   function JMIF_Focus( args)
   {
 	var parameters = {};
-	parameters["entityId"] = args[0];
-	parameters["feed"] = args[2];
+	JMIF_CompleteParameters( parameters);
+	parameters.entityId = args[0];
+	parameters.feed = args[2];
 	getMap().compute( parameters);
   }
   function JMIF_Center( args)
   {
 	var parameters = {};
-	parameters["attributeId"] = args[0];
-	parameters["analysisProfile"] = "DiscoveryProfile";
-	parameters["feed"] = args[2];
+	JMIF_CompleteParameters( parameters);
+	parameters.attributeId = args[0];
+	parameters.analysisProfile = "DiscoveryProfile";
+	parameters.feed = args[2];
   	getMap().compute( parameters);
   }
+function JMIF_CompleteParameters( parameters) {
+	 parameters.allowDomain = "*";
+	 parameters.wpsserverurl = "http://server.just-map-it.com";
+     parameters.feedsserverurl = "http://feeds.just-map-it.com";
+	 parameters.wpsplanname = "Feeds";
+	 parameters.track = "";
+	 parameters.site = "";
+	 parameters.readyCallback = "JMIF_ready";
+	 parameters.emptyCallback = "JMIF_empty";
+	 parameters.errorCallback = "JMIF_error";
+	 parameters.jsessionid = "";
+} 
 </script>
 ]]>   
 </Content>

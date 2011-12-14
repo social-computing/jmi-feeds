@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='ISO-8859-1'?>
+<?xml version='1.0' encoding='UTF-8'?>
 
 <!DOCTYPE dictionary SYSTEM "WPS-dictionary.dtd" >
 
@@ -6,11 +6,32 @@
 	<comment>Feeds Categories Dictionary</comment>
 
 	<entities>
-		<Feeds-entities name="Media Sociaux">
+		<REST-entities name="Feeds" type="json" invert="false">
+			<URL-connection>
+				<url>{$feedsserverurl}/rest/maps/map.json</url>
+				<url-header name="Cookie">JSESSIONID={$jsessionid}</url-header>
+				<url-parameter name="url">{$feed}</url-parameter>
+				<url-parameter name="track">{$track}</url-parameter>
+				<url-parameter name="site">{$site}</url-parameter>
+			</URL-connection>
+			
+			<REST-entity markup="entities" id="id" >
+				<REST-property id="name" />
+				<REST-property id="poss_id" attribute="id" />
+				<REST-property id="poss_name" attribute="name" />
+			</REST-entity>
+	
+			<REST-attribute markup="attributes" id="id" >
+				<REST-property id="name" />
+				<REST-property id="poss_id" entity="id" />
+				<REST-property id="poss_name" entity="name" />
+			</REST-attribute>
+		</REST-entities>
+		<!--Feeds-entities name="Media Sociaux">
 			<URL-connection>
 				<url>{$feed}</url>
 			</URL-connection>
-		</Feeds-entities>
+		</Feeds-entities-->
 	</entities>
 	
 	<affinity-reader-profile name="AffReader" affinity-reader-ref="*" threshold="100" />

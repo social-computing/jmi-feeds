@@ -33,37 +33,6 @@ import com.sun.jersey.multipart.FormDataParam;
 public class FeedManager {
     private static final Logger LOG = LoggerFactory.getLogger(FeedManager.class);
 
-    /**
-     * @param ui
-     */
-    @GET
-    @Path("record.json")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Feed record( @QueryParam("url") String url, @QueryParam("title") String title, @QueryParam("count") int count) {
-        Feed feed = null;
-        try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            if( url != null) {
-                url = url.trim();
-                feed = (Feed) session.get(Feed.class, url);
-                if( feed == null) {
-                    feed = new Feed( url, title, count > 0);
-                    session.save( feed);
-                }
-                else {
-                    feed.incrementUpdate( title, count > 0);
-                    session.update( feed);
-                }
-            }
-            Response.ok();
-        }
-        catch (HibernateException e) {
-            LOG.error(e.getMessage(), e);
-            Response.status( HttpServletResponse.SC_BAD_REQUEST);
-        }
-        return feed;
-    }
-    
     @GET
     @Path("count.json")
     @Produces(MediaType.APPLICATION_JSON)

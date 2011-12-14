@@ -17,14 +17,11 @@
   var viewFeeds = new google.Blog(getFeedUrl, window.name); 
   
   function getFeedUrl() {
-	  var flashvars = {
-		allowDomain: "*",
-		wpsserverurl: "http%3A%2F%2Fserver.just-map-it.com%2F",
-		wpsplanname: "Feeds",
-		analysisProfile: "GlobalProfile",
-		feed: viewFeeds.getPostsFeedUrl()
-	   };
-
+	 var flashvars = {};
+	 JMIF_CompleteParameters( flashvars);
+	 flashvars.analysisProfile = "GlobalProfile";
+	 flashvars.feed = viewFeeds.getPostsFeedUrl();
+	 
 	   var parameters = gadgets.views ? gadgets.views.getParams() : null;
 	   if( parameters) {
 	    	for (var prop in parameters) {
@@ -48,16 +45,13 @@
   	 return document.getElementById('wps-feeds').childNodes[0];
   }
     
-  function empty() {
+  function JMIF_empty() {
  	 alert( "Sorry, the map is empty. Does the feed contains categories?");
   }
-  function ready() {
+  function JMIF_ready() {
    // do something here
   }
-  function status( status) {
-   // do something here
-  }
-  function error( error) {
+  function JMIF_error( error) {
    	alert( "Sorry, an error occured. Is this URL correct? " + error);
   }
   function JMIF_Navigate( url) {
@@ -66,18 +60,32 @@
   function JMIF_Focus( args)
   {
 	var parameters = {};
-	parameters["entityId"] = args[0];
-	parameters["feed"] = args[2];
+	JMIF_CompleteParameters( parameters);
+	parameters.entityId = args[0];
+	parameters.feed = args[2];
 	getMap().compute( parameters);
   }
   function JMIF_Center( args)
   {
 	var parameters = {};
-	parameters["attributeId"] = args[0];
-	parameters["analysisProfile"] = "DiscoveryProfile";
-	parameters["feed"] = args[2];
+	JMIF_CompleteParameters( parameters);
+	parameters.attributeId = args[0];
+	parameters.analysisProfile = "DiscoveryProfile";
+	parameters.feed = args[2];
   	getMap().compute( parameters);
   }
+function JMIF_CompleteParameters( parameters) {
+	 parameters.allowDomain = "*";
+	 parameters.wpsserverurl = "http://server.just-map-it.com";
+     parameters.feedsserverurl = "http://feeds.just-map-it.com";
+	 parameters.wpsplanname = "Feeds";
+	 parameters.track = "";
+	 parameters.site = "";
+	 parameters.readyCallback = "JMIF_ready";
+	 parameters.emptyCallback = "JMIF_empty";
+	 parameters.errorCallback = "JMIF_error";
+	 parameters.jsessionid = "";
+} 
 </script>
 ]]>   
 </Content>

@@ -25,42 +25,6 @@ import com.socialcomputing.feeds.utils.HibernateUtil;
 public class SiteManager {
     private static final Logger LOG = LoggerFactory.getLogger(SiteManager.class);
 
-    /**
-     * @param ui
-     */
-    @GET
-    @Path("record.json")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Site record( @QueryParam("url") String url, @QueryParam("feed") String feed) {
-        Site site = null;
-        try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            if( url != null) {
-                url = normalizeUrl( url.trim());
-                site = (Site) session.get(Site.class, url);
-                if( site == null) {
-                    site = new Site( url, feed);
-                    session.save( site);
-                }
-                else {
-                    site.incrementUpdate( feed);
-                    session.update( site);
-                }
-            }
-            Response.ok();
-        }
-        catch (Exception e) {
-            LOG.error(e.getMessage(), e);
-            Response.status( HttpServletResponse.SC_BAD_REQUEST);
-        }
-        return site;
-    }
-    private String normalizeUrl( String url) throws MalformedURLException {
-        URL u = new URL( url);
-        int port = u.getPort();
-        return u.getProtocol() + "://" + u.getHost()+ (port != -1 && port != 80 ? ":" + port : "") + u.getPath();
-    }
-    
     @GET
     @Path("top.json")
     @Produces(MediaType.APPLICATION_JSON)

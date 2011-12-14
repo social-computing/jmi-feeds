@@ -18,13 +18,10 @@
 </widget:preferences>
  <script type="text/javascript" >
 widget.onLoad = function() {
-	var flashvars = {
-		allowDomain: "*",
-		wpsserverurl: "http%3A%2F%2Fserver.just-map-it.com%2F",
-		wpsplanname: "Feeds",
-			analysisProfile: "GlobalProfile",
-			feed: widget.getValue( "feed")
-	};
+	var flashvars = {};
+	JMIF_CompleteParameters( flashvars);
+	flashvars.analysisProfile = "GlobalProfile";
+	flashvars.feed = widget.getValue( "feed");
 	var fv='';
 	for (var prop in flashvars) {
 		if (fv) fv=fv+String.fromCharCode(38);
@@ -64,7 +61,7 @@ function addParams( parent, flashvars) {
 	parent.appendChild( widget.createElement( 'param', { 'name':'flashvars', 'value':flashvars}));
 	parent.appendChild( widget.createElement( 'param', { 'name':'wmode', 'value':'opaque'}));
 }
-function ready() {
+function JMIF_ready() {
   var elements = widget.body.getElementsByTagName("object");
   var map = elements[elements.length-1];
   var titles = map.getArrayProperty( "$FEEDS_TITLES");
@@ -72,37 +69,46 @@ function ready() {
 	widget.setTitle( 'Just Map It! Feeds - ' + titles.join( ', '));
   }
 }
-function status( status) {
-// do something here
-}
-function empty() {
+function JMIF_empty() {
 	widget.setTitle( 'Just Map It! Feeds');
 	widget.setBody( "Sorry, the map is empty. Does the feed contains categories?");
 }
-function error( error) {
+function JMIF_error( error) {
 	widget.setTitle( 'Just Map It! Feeds');
 	widget.setBody( "Sorry, an error occured. Is this URL correct?");
 }
 function JMIF_Navigate( url) {
 	window.open( url, "_blank");
 }
-function JMIF_Focus( args)
-{
+function JMIF_Focus( args) {
 	var parameters = {};
-	parameters["entityId"] = args[0];
-	parameters["feed"] = args[2];
+	JMIF_CompleteParameters( parameters);
+	parameters.entityId = args[0];
+	parameters.feed = args[2];
 	var elements = widget.body.getElementsByTagName("object");
 	elements[elements.length-1].compute( parameters);
 }
-function JMIF_Center( args)
-{
+function JMIF_Center( args) {
 	var parameters = {};
-	parameters["attributeId"] = args[0];
-	parameters["analysisProfile"] = "DiscoveryProfile";
-	parameters["feed"] = args[2];
+	JMIF_CompleteParameters( parameters);	
+	parameters.attributeId = args[0];
+	parameters.analysisProfile = "DiscoveryProfile";
+	parameters.feed = args[2];
 	var elements = widget.body.getElementsByTagName("object");
 	elements[elements.length-1].compute( parameters);
 }
+function JMIF_CompleteParameters( parameters) {
+	 parameters.allowDomain = "*";
+	 parameters.wpsserverurl = "http://server.just-map-it.com";
+     parameters.feedsserverurl = "http://feeds.just-map-it.com";
+	 parameters.wpsplanname = "Feeds";
+	 parameters.track = "";
+	 parameters.site = "";
+	 parameters.readyCallback = "JMIF_ready";
+	 parameters.emptyCallback = "JMIF_empty";
+	 parameters.errorCallback = "JMIF_error";
+	 parameters.jsessionid = "";
+} 
 widget.onResize = function() {
 	var elements = widget.body.getElementsByTagName("object");
 	var flash = elements[elements.length-1];

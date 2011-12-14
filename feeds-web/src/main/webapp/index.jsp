@@ -76,22 +76,34 @@ $(document).ready(function() {
   function JMIF_Focus( args)
   {
 	var parameters = {};
-	parameters["entityId"] = args[0];
-	parameters["feed"] = args[2];
-	parameters["track"] = "";
+	JMIF_CompleteParameters( parameters);
+	parameters.entityId = args[0];
+	parameters.feed = args[2];
+	parameters.track = "";
 	document.getElementById("wps-feeds").compute( parameters);
 	document.getElementById("message").innerHTML = "<i>Focus on category:</i> " + args[1];
   }
   function JMIF_Center( args)
   {
 	var parameters = {};
-	parameters["attributeId"] = args[0];
-	parameters["analysisProfile"] = "DiscoveryProfile";
-	parameters["feed"] = args[2];
-	parameters["track"] = "";
+	JMIF_CompleteParameters( parameters);
+	parameters.attributeId = args[0];
+	parameters.feed = args[2];
+	parameters.analysisProfile = "DiscoveryProfile";
+	parameters.track = "";
 	document.getElementById("wps-feeds").compute( parameters);
 	document.getElementById("message").innerHTML = "<i>Centered on item:</i> " + args[1];
   }
+function JMIF_CompleteParameters( parameters) {
+	 parameters.allowDomain = "*";
+	 //parameters.wpsserverurl = "http://localhost:8080/jmi-server";
+     //parameters.feedsserverurl = "http://localhost:8080/feeds-web";
+	 parameters.wpsserverurl = "http://server.just-map-it.com";
+     parameters.feedsserverurl = "http://feeds.just-map-it.com";
+	 parameters.wpsplanname = "Feeds";
+	 parameters.site = "";
+	 parameters.jsessionid = '<%=session.getId()%>';
+} 
 </script>
 <!-- Enable Browser History by replacing useBrowserHistory tokens with two hyphens -->
 <!-- BEGIN Browser History required section -->
@@ -104,14 +116,10 @@ $(document).ready(function() {
     var swfVersionStr = "10.0.0";
     var xiSwfUrlStr = "./client/playerProductInstall.swf";
     var flashvars = {};
-    flashvars.allowDomain = "*";
-    //flashvars.wpsserverurl = "http://localhost:8080/jmi-server";
-    //flashvars.track = "http://localhost:8080/feeds-web/rest/feeds/record.json";
-    flashvars.wpsserverurl = "http://server.just-map-it.com/";
-    flashvars.track = "http://feeds.just-map-it.com/rest/feeds/record.json";
-    flashvars.wpsplanname = "Feeds";
+	JMIF_CompleteParameters( flashvars);
     flashvars.analysisProfile = "GlobalProfile";
-    flashvars.feed = "<%=java.net.URLEncoder.encode(feed,"UTF-8")%>";
+    flashvars.feed = "<%=java.net.URLEncoder.encode(feed, "UTF-8")%>";
+    flashvars.track = "feed";
     var params = {};
     params.quality = "high";
     params.bgcolor = "#FFFFFF";
@@ -202,9 +210,8 @@ You can also add Just Map It! Feeds to: <h3><a href="http://www.google.com/ig/ad
 </div>
 <%} else {%>
     <div id="flashContent">
-    	<p>
-     	To view this page ensure that Adobe Flash Player version 
-	10.0.0 or greater is installed. 
+    <p>
+     	To view this page ensure that Adobe Flash Player version 10.0.0 or greater is installed. 
 	</p>
 	<script type="text/javascript"> 
 	var pageHost = ((document.location.protocol == "https:") ? "https://" :	"http://"); 
@@ -213,34 +220,13 @@ You can also add Just Map It! Feeds to: <h3><a href="http://www.google.com/ig/ad
 	</script> 
  </div>
  <noscript>
-   <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%" id="wps-feeds">
-       <param name="movie" value="./client/jmi-flex-1.0-SNAPSHOT.swf" />
-       <param name="quality" value="high" />
-       <param name="bgcolor" value="#FFFFFF" />
-       <param name="allowScriptAccess" value="always" />
-       <param name="allowFullScreen" value="true" />
-       <param name="wmode" value="transparent" />
-       <!--[if !IE]>-->
-       <object type="application/x-shockwave-flash" data="./client/jmi-flex-1.0-SNAPSHOT.swf" width="100%" height="100%">
-           <param name="quality" value="high" />
-           <param name="bgcolor" value="#FFFFFF" />
-           <param name="allowScriptAccess" value="sameDomain" />
-           <param name="allowFullScreen" value="true" />
-       	 <param name="wmode" value="transparent" />
-       <!--<![endif]-->
-       <!--[if gte IE 6]>-->
-       	<p> 
-       		Either scripts and active content are not permitted to run or Adobe Flash Player version
-       		10.0.0 or greater is not installed.
-       	</p>
-       <!--<![endif]-->
-           <a href="http://www.adobe.com/go/getflashplayer">
-               <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
-           </a>
-       <!--[if !IE]>-->
-       </object>
-       <!--<![endif]-->
-   </object>
+     	<p> 
+     		Either scripts and active content are not permitted to run or Adobe Flash Player version
+     		10.0.0 or greater is not installed.
+     	</p>
+        <a href="http://www.adobe.com/go/getflashplayer">
+            <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+        </a>
 </noscript>		
 <%}%>
 </div>
