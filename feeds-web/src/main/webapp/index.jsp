@@ -1,14 +1,45 @@
-﻿<%@page import="com.socialcomputing.feeds.*"%><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page import="com.socialcomputing.feeds.*"%><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#" lang="en" xml:lang="en">	
 <%String feed = request.getParameter("feed");
 if( feed == null) feed = "";
 int numpage = 0;
 String spage = request.getParameter("page");
-if( spage != null) numpage = Integer.parseInt( spage);%><head>
-<title>Just Map It! Feeds</title>
+if( spage != null) numpage = Integer.parseInt( spage);
+java.util.List<Feed> feeds = null;
+long feedsCount = 0;
+String title = "Just Map It! Feeds";
+String description = "Just Map It! Feeds lets you view and navigate your feeds thru an interactive map";
+if( feed.length() == 0) {
+    FeedManager feedManager = new FeedManager();
+    feeds = feedManager.last( numpage*10, 10, "true");
+    feedsCount = feedManager.count( "true");
+    StringBuilder sbTitle = new StringBuilder();
+    StringBuilder sbDescription = new StringBuilder( description);
+    sbDescription.append(": ");
+    boolean first = true;
+    for (Feed f : feeds) {
+        java.net.URL u = new java.net.URL( f.getUrl());
+        if( first) first = false;
+        else {
+            sbTitle.append(", ");
+            sbDescription.append(", ");
+        }
+        String host = u.getHost();
+        sbDescription.append( host);
+        host = host.substring(0, host.lastIndexOf( '.'));
+        int p = host.indexOf( '.');
+        if( p!= -1)
+            host = host.substring(p +1);
+        sbTitle.append( host);
+    }
+    sbTitle.append(" | ").append( title);
+    title = sbTitle.toString();
+    description = sbDescription.toString();
+}%><head>
+<title><%=title%></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="content-language" content="en" />
-<meta name="description" content="Just Map It! Feeds lets you view and navigate your feeds thru an interactive map! by Social Computing" />
+<meta name="description" content="<%=description%>" />
 <meta name="keywords" content="rss, netvibes, google, blogger, feeds, feed, map, cartography, visualization, social, blog, gadget, widget, social computing, category, representation, information" />
 <meta name="author" content="Social Computing" /> 
 <meta name="robots" content="all" /> 
@@ -188,9 +219,7 @@ swfobject.createCSS("#flashContent", "display:block;text-align:left;");
 <%if (feed.length() == 0) {%>
 <div id="last-feeds"><h1>Last mapped feeds:</h1></div>
 <div class="grid">
-<%FeedManager feedManager = new FeedManager();
-java.util.List<Feed> feeds = feedManager.last( numpage*10, 10, "true");
-for (Feed f : feeds) {%><div class="vignette">
+<%for (Feed f : feeds) {%><div class="vignette">
 <div class="thumbnail">
 <a title="Just Map It! Feed: <%=f.getUrl()%>" href='./?feed=<%=java.net.URLEncoder.encode(f.getUrl(),"UTF-8")%>'><img border="0" width="150" height="100" alt="<%=f.getTitle().replaceAll("\"","&quot;")%>" src="./rest/feeds/feed/thumbnail.png?url=<%=java.net.URLEncoder.encode(f.getUrl(),"UTF-8")%>" /></a>
 <!--span class="play"/-->
@@ -198,10 +227,10 @@ for (Feed f : feeds) {%><div class="vignette">
 <h2><a href='./?feed=<%=java.net.URLEncoder.encode(f.getUrl(),"UTF-8")%>'><%=f.getTitle()%></a></h2>
 </div></div><%}%></div>
 <div class="pagination"><ul>
-<%long max = (feedManager.count( "true") / 10) + 1;
-for( long i = 0; i < max; ++i) { %>
+<%long maxFeeds = (feedsCount / 10) + 1;
+for( long i = 0; i < maxFeeds; ++i) { %>
 <li <%=(numpage==i? "class='active'": "")%>><a href=".<%=(i==0? "" : "/?page=" + i)%>"><%=i+1%></a></li>
-<%} for( long i = max; i < 20; ++i) { %>
+<%} for( long i = maxFeeds; i < 20; ++i) { %>
 <li class='disabled'><a ><%=i+1%></a></li>
 <%}%></ul></div>
 <div class="slogan">
