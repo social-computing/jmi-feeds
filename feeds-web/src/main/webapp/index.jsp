@@ -1,4 +1,4 @@
-<%@page import="com.socialcomputing.feeds.*"%><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<%@page import="com.socialcomputing.feeds.*"%><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#" lang="en" xml:lang="en">	
 <%String feed = request.getParameter("feed");
 if( feed == null) feed = "";
@@ -249,9 +249,8 @@ You can also add Just Map It! Feeds to: <h3><a href="http://www.google.com/ig/ad
 	</script> 
  </div>
  <noscript>
-     	<p> 
-     		Either scripts and active content are not permitted to run or Adobe Flash Player version
-     		10.0.0 or greater is not installed.
+     	<br/><br/><br/><p> 
+     		Either scripts and active content are not permitted to run or Adobe Flash Player version 10.0.0 or greater is not installed.
      	</p>
         <a href="http://www.adobe.com/go/getflashplayer">
             <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
