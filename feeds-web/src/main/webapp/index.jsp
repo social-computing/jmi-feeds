@@ -13,7 +13,8 @@ if( feed.length() == 0) {
     FeedManager feedManager = new FeedManager();
     feeds = feedManager.last( numpage*10, 10, "true");
     feedsCount = feedManager.count( "true");
-    StringBuilder sbTitle = new StringBuilder();
+    StringBuilder sbTitle = new StringBuilder( title);
+    sbTitle.append(": ");
     StringBuilder sbDescription = new StringBuilder( description);
     sbDescription.append(": ");
     boolean first = true;
@@ -32,7 +33,6 @@ if( feed.length() == 0) {
             host = host.substring(p +1);
         sbTitle.append( host);
     }
-    sbTitle.append(" | ").append( title);
     title = sbTitle.toString();
     description = sbDescription.toString();
 }%><head>
@@ -227,10 +227,10 @@ swfobject.createCSS("#flashContent", "display:block;text-align:left;");
 <h2><a href='./?feed=<%=java.net.URLEncoder.encode(f.getUrl(),"UTF-8")%>'><%=f.getTitle()%></a></h2>
 </div></div><%}%></div>
 <div class="pagination"><ul>
-<%long maxFeeds = (feedsCount / 10) + 1;
-for( long i = 0; i < maxFeeds; ++i) { %>
+<%long maxPages = Math.min((feedsCount / 10) + 1, 20);
+for( long i = 0; i < maxPages; ++i) { %>
 <li <%=(numpage==i? "class='active'": "")%>><a href=".<%=(i==0? "" : "/?page=" + i)%>"><%=i+1%></a></li>
-<%} for( long i = maxFeeds; i < 20; ++i) { %>
+<%} for( long i = maxPages; i < 20; ++i) { %>
 <li class='disabled'><a ><%=i+1%></a></li>
 <%}%></ul></div>
 <div class="slogan">
