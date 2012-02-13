@@ -67,6 +67,7 @@ params.quality = "high";
 params.bgcolor = "#FFFFFF";
 params.allowscriptaccess = "always";
 params.allowfullscreen = "true";
+params.wmode = "opaque";
 swfobject.embedSWF(
     "http://feeds.just-map-it.com/client/jmi-flex-1.0-SNAPSHOT.swf", mapid, 
     "<%=request.getParameter("w")%>", "<%=request.getParameter("h")%>", 

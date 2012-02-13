@@ -32,7 +32,7 @@
    }
    var params= {
 		bgcolor: "fff", allowFullScreen: "true", allowscriptaccess: "always",
-        allowNetworking: "all", quality: "high", menu: "true", 
+        allowNetworking: "all", quality: "high", menu: "true", wmode: "opaque",
         flashvars: fv
  	};
   	gadgets.flash.embedFlash('http://feeds.just-map-it.com/client/jmi-flex-1.0-SNAPSHOT.swf', 'wps-feeds', 10, params);

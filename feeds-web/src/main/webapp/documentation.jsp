@@ -8,12 +8,53 @@
 	<meta name="keywords" content="documentation, rss, atom, rdf, feeds, feed, map, cartography, visualization, social, blog, gadget, widget, social computing, category, representation, information" />
 	<meta name="author" content="Social Computing" /> 
 	<meta name="robots" content="all" /> 
-	<link rel="stylesheet" href="./mapyourfeeds-doc.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="css/960.css" media="screen" type="text/css"/>
+	<link rel="stylesheet" href="css/reset.css" media="screen" type="text/css"/>
+	<link rel="stylesheet" href="css/text.css" media="screen" type="text/css"/>
+	<link rel="stylesheet" media="screen" type="text/css" href="css/styles.css"/>
+	<style type="text/css">
+	body {
+		padding: 20px 0px 20px 0px;
+	}
+	#documentation h1 {
+		font-size: 36px;
+		font-weight: bold;
+		color: #37b0e3;
+		margin-bottom: 0px;
+	}
+
+	#documentation h2, h2 a {
+		padding: 10px 0 0 0;
+		font-size: 20px;
+		font-weight: bold;
+		color: #f59c23;
+	}
+
+	#documentation h3 {
+		padding: 6px 0 0 10px;
+		font-size: 16px;
+		font-weight: bold;
+		color: #bec840;
+	}
+	#documentation {
+	padding: 0px 40px 20px 40px;
+	color: #37b0e3;
+	}
+	#documentation a {
+		font-weight: bold;
+		color: #37b0e3;
+	}
+	</style>
 	<jsp:include page="./js/ga.js" /> 
 </head>
 <body>
+<!-- CONTENT -->
+<div id="container" class="container_12">
+<div id="topContent">
+	<div id="titreTopContent" class="grid_12"><h1>How to use the service</h1></div>
+</div>
+<div>&nbsp;</div>
 <div id="documentation">
-<h1>How to use the service</h1>
 <h2>Overview</h2>
 Just Map It! Feeds displays your feed(s) items on a map. 
 <h2>Kinds of URL(s)</h2>
@@ -38,6 +79,7 @@ You can place the map directly on any webpage. <a target="_blank" title="Add it 
 <p>Verify the feed contains items with categories.</p>
 <h3>Flash is not supported</h3>
 <p>The HTML5 client is coming soon...</p>
+</div>
 </div>
 </body>
 </html>
