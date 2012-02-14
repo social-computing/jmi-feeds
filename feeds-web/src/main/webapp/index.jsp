@@ -183,7 +183,7 @@ swfobject.createCSS("#flashContent", "display:block;text-align:left;");
 <a title="Just Map It! Feed: <%=f.getUrl()%>" href='./?feed=<%=java.net.URLEncoder.encode(f.getUrl(),"UTF-8")%>'><img border="0" width="150" height="100" alt="<%=f.getTitle().replaceAll("\"","&quot;")%>" src="./rest/feeds/feed/thumbnail.png?url=<%=java.net.URLEncoder.encode(f.getUrl(),"UTF-8")%>" /></a>
 <!--span class="play"/-->
 </div><div class="thumbnail-title">
-<h2><a href='./?feed=<%=java.net.URLEncoder.encode(f.getUrl(),"UTF-8")%>'><%=f.getTitle()%></a></h2>
+<h2><a href='./?feed=<%=java.net.URLEncoder.encode(f.getUrl(),"UTF-8")%>' title="<%=f.getTitle().replaceAll("\"","&quot;")%>"><%=f.getTitle().length()>60 ? f.getTitle().substring(0, 57).concat("...") : f.getTitle()%></a></h2>
 </div></div><%}%></div>
 <div class="clear"></div>
 <div class="pagination"><ul>
