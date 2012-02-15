@@ -30,8 +30,8 @@ ul {
 
 ul  li {
 	display:inline;
-	margin:5px;
-}
+	margin:5px 0 5px 5px;
+ }
 
 
 /*HEADER*/
@@ -104,7 +104,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#122d45', end
 
 #menuHeader ul {
 	margin:0;
-	padding-left: 24px;
+	padding-left: 20px;
 }
 
 #menuHeader a {
