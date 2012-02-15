@@ -142,7 +142,7 @@ function JMIF_CompleteParameters( parameters) {
     attributes.align = "middle";
     swfobject.embedSWF(
         "./client/jmi-flex-1.0-SNAPSHOT.swf", "flashContent", 
-        "100%", "100%", 
+        "100%", "550px", 
         swfVersionStr, xiSwfUrlStr, 
         flashvars, params, attributes);
 swfobject.createCSS("#flashContent", "display:block;text-align:left;");

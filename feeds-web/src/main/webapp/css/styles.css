@@ -19,7 +19,7 @@ html,body {
 
 body {
 	margin: 0;
-	padding: 90px 0px 90px 0px;
+	padding: 0px;
 	font-family: "HelveticaRegular", Arial, sans-serif;
 	font-size:12px;
 }
@@ -39,9 +39,6 @@ ul  li {
 #header{
 	height:90px;
 	width:100%;
-	position:fixed;
-	top:0;
-	z-index:2;
 	background: #122d45; /* Old browsers */
 
 /* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -119,10 +116,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#122d45', end
 /*Content*/
 /******************************/
 #container {
-	height: 68%;
-	margin: 0 auto;
-	position:relative;
-	z-index:1;
+	height: auto;
+	margin: 0 auto 20px;
 }
 
 #topContent {
@@ -266,11 +261,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#122d45', end
 /*Footer*/
 /******************************/
 #footer {
-	height:90px;
+	min-height:210px;
 	width:100%;
-	position:fixed;
-	bottom:0;
-	z-index:2;
 	background: #1d4467; /* Old browsers */
 
 /* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -347,6 +339,10 @@ ul#copy li {
 	margin-bottom: 5px;
 }
 
+.network table {
+	margin:0;
+}
+
 #zoneReseaux p,#zoneReseaux  a {
 	font-size:18px;
 	color:#fb9e34;	
@@ -363,14 +359,4 @@ ul#copy li {
 /*Clear*/
 .clear {
 	clear:both;
-}
-
-/*MEDIA QUERIES*/
-@media screen and (max-width:1024px)
-{
-	
-	#container {
-		height:110%;
-		overflow:visible;
-	}
 }
