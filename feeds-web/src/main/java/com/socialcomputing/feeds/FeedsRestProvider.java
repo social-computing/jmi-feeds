@@ -70,7 +70,7 @@ public class FeedsRestProvider {
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
+            return StoreHelper.ErrorToJson(e);
         }
         storeHelper.addGlobal( "FEEDS_TITLES",  titles.toArray());
         storeHelper.addGlobal( "FEEDS_URLS",    urls.toArray());
