@@ -1,32 +1,27 @@
-<?xml version='1.0' encoding='ISO-8859-1'?>
-
-<!DOCTYPE swatch SYSTEM "swatch.dtd">
-
-<swatch             name="FEED_NODE_NORM"
-					title="{sNAME}">
+<swatch name="FEED_NODE_NORM" title="{sNAME}">
 
 <!-- Base Satellite definition -->
     <sat shape="diskShp" transfo="baseTrf" isBack="true" isVisible="true" isSuper="true" isSub="false" isCur="false" isRest="true" isTip="false" isNoSided="false">
-        <slice inCol="55 176 227" outCol="55 176 227" alpha="1" linewidth="1" />
-        <slice inCol="255 255 255" outCol="55 176 227" alpha="1" linewidth="1">
+        <slice inCol="148 209 84" outCol="238 242 245" alpha="1" linewidth="1" />
+        <slice inCol="238 242 245" outCol="238 242 245" alpha="1" linewidth="1">
             <transfo scale=".87" map="absolute" />
         </slice>
     </sat>
 
 <!-- Sub Spots -->
     <sat shape="diskShp" isSub="true" isSuper="false" isVisible="true" isCur="false" isRest="true" isBack="false" isTip="false" isNoSided="false">
-        <slice inCol="55 176 227" outCol="138 138 138" transfo="spotTrf" alpha="1" linewidth="1" />
+        <slice inCol="251 158 58" outCol="238 242 245" transfo="spotTrf" alpha="1" linewidth="1" />
     </sat>
 
 <!-- Super Spot -->
     <sat shape="diskShp" isVisible="true" isSuper="true" isSub="false" isCur="false" isRest="true" isBack="false" isTip="false" isNoSided="false">
-        <slice inCol="55 176 227" outCol="138 138 138" transfo="spotTrf" alpha="1" linewidth="1" />
+        <slice inCol="251 158 58" outCol="238 242 245" transfo="spotTrf" alpha="1" linewidth="1" />
     </sat>
 
 <!-- Title -->
     <sat shape="voidShp" transfo="titleTrf" isSub="true" isSuper="true" isTip="true" isVisible="true" isCur="false" isRest="true" isBack="false" isNoSided="false">
         <slice alpha="1" linewidth="1">
-            <tip font="nameFnt" label="{+20.1sNAME}" inCol="138 138 138" textCol="@whiteCol" rounded="10"  isCorner="true" blur="-1" dir="SW" align="left" isFloating="false" />
+            <tip font="nameFnt" label="{+20.1sNAME}" inCol="@whiteCol" textCol="137 128 119" rounded="10" isCorner="true" blur="-1" dir="SW" align="left" isFloating="false" />
         </slice>
     </sat>
 
@@ -70,4 +65,3 @@
     <tip id="textTip" font="nameFnt" label="{+sNAME}" textCol="@blackCol" isCorner="true" blur="-1" rounded="-1" dir="SW" align="left" isFloating="false" />
                     					
 </swatch>
-
