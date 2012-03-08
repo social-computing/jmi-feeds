@@ -1,4 +1,4 @@
-﻿<%@page import="com.socialcomputing.feeds.*"%><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page import="com.socialcomputing.feeds.*"%><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#" lang="en" xml:lang="en">	
 <%String feed = request.getParameter("feed");
 if( feed == null) feed = "";
@@ -43,6 +43,7 @@ if( feed.length() == 0) {
 <meta name="keywords" content="rss, netvibes, google, blogger, feeds, feed, map, cartography, visualization, social, blog, gadget, widget, social computing, category, representation, information" />
 <meta name="author" content="Social Computing" /> 
 <meta name="robots" content="all" /> 
+<meta name="viewport" content="target- densitydpi=device-dpi, width=device-width, user-scalable=no"/>
 <meta property="og:title" content="Just Map It! Feeds" />
 <meta property="og:description" content="View and navigate your feeds thru an interactive map! by Social Computing" />
 <meta property="og:image" content="http://feeds.just-map-it.com/images/thumbnail.png" />
@@ -135,6 +136,7 @@ function JMIF_CompleteParameters( parameters) {
     params.bgcolor = "#FFFFFF";
     params.allowscriptaccess = "always";
     params.allowfullscreen = "true";
+    params.fullScreenOnSelection = "true";
     params.wmode = "transparent";
     var attributes = {};
     attributes.id = "wps-feeds";
