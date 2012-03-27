@@ -48,106 +48,104 @@ if( feed.length() == 0) {
 <meta property="og:description" content="View and navigate your feeds thru an interactive map! by Social Computing" />
 <meta property="og:image" content="http://feeds.just-map-it.com/images/thumbnail.png" />
 <link rel="shortcut icon" href="http://feeds.just-map-it.com/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="./jmi-client/jmi-client.css" />
 <jsp:include page="./head-header.jsp" />
+<script type="text/javascript" src="./jmi-client/jmi-client.js"></script>
 <script type="text/javascript">
-<%if( feed.length() > 0) {%>
-  function ready() {
-	  var map = document.getElementById("wps-feeds");
-	  var titles = map.getArrayProperty( "$FEEDS_TITLES");
-	  if( titles) {
-	  	document.title = titles.join( ', ') + ' | Just Map It! Feeds - ';
-		if( map.getProperty( "$analysisProfile") == "GlobalProfile") {
-			document.getElementById("message").innerHTML = titles.join( ', ');
-		}
-	  }
-	  var urls = map.getArrayProperty( "$FEEDS_URLS");
-	  if( urls && urls.length == 1) {
-		var data = {};
-		data["url"] = urls[0];
-		$.getJSON( "./rest/feeds/feed.json", data, function( feed){
-			var date = new Date();
-			if( !feed.thumbnail_date)
-				feed.thumbnail_date = 0;
-			var delta = date.getTime() - feed.thumbnail_date;
-			if( delta > 7 * 24 * 3600 * 1000) {
-				map.uploadAsImage( 'http://feeds.just-map-it.com/rest/feeds/feed/thumbnail.png', 'preview', 'image/png', 150, 100, true, data);
-			}
-		});
-	  }
+var breadcrumbTitles = { shortTitle: '', longTitle: '' };
+function JMIF_breadcrumbTitlesFunc(event) {
+	if( event.type === JMI.Map.event.EMPTY) {
+		return {shortTitle: 'Sorry, the map is empty. Does the feed contains categories?', longTitle: 'Sorry, the map is empty. Does the feed contains categories?'};
+	}
+	if( event.type === JMI.Map.event.ERROR) {
+		return {shortTitle: 'Sorry, an error occured. Is this URL correct?', longTitle: 'Sorry, an error occured. Error: ' + event.message};
+	}
+	return breadcrumbTitles;
 }
-  function empty() {
-	document.getElementById("message").innerHTML = "Sorry, the map is empty. Does the feed contains categories?";
-  }
-  function error( error) {
-	document.getElementById("message").innerHTML = "Sorry, an error occured. Is this URL correct? <span class='hidden-message'>" + error + "</span>";
-  }
-  function JMIF_Navigate( url) {
- 	 window.open( url, "_blank");
-  }
-  function JMIF_Focus( args)
-  {
+function JMIF_CompleteParameters( parameters) {
+     //parameters.feedsserverurl = "http://localhost:8080/feeds-web";
+     parameters.feedsserverurl = "http://feeds.just-map-it.com";
+	 parameters.map = "Feeds";
+	 parameters.site = "";
+	 parameters.jsessionid = '<%=session.getId()%>';
+} 
+function JMIF_Navigate( map, url) {
+	 window.open( url, "_blank");
+}
+function JMIF_Focus( map, args)
+{
 	var parameters = {};
 	JMIF_CompleteParameters( parameters);
 	parameters.entityId = args[0];
 	parameters.feed = args[2];
 	parameters.track = "";
-	document.getElementById("wps-feeds").compute( parameters);
-	document.getElementById("message").innerHTML = "<i>Focus on category:</i> " + args[1];
-  }
-  function JMIF_Center( args)
-  {
+	breadcrumbTitles.shortTitle = "Focus";
+	breadcrumbTitles.longTitle = "Focus on category: " + args[1];
+	map.compute( parameters);
+}
+function JMIF_Center( map, args)
+{
 	var parameters = {};
 	JMIF_CompleteParameters( parameters);
 	parameters.attributeId = args[0];
 	parameters.feed = args[2];
 	parameters.analysisProfile = "DiscoveryProfile";
 	parameters.track = "";
-	document.getElementById("wps-feeds").compute( parameters);
-	document.getElementById("message").innerHTML = "<i>Centered on item:</i> " + args[1];
-  }
-function JMIF_CompleteParameters( parameters) {
-	 parameters.allowDomain = "*";
-	 //parameters.wpsserverurl = "http://localhost:8080/jmi-server";
-     //parameters.feedsserverurl = "http://localhost:8080/feeds-web";
-	 parameters.wpsserverurl = "http://server.just-map-it.com";
-     parameters.feedsserverurl = "http://feeds.just-map-it.com";
-	 parameters.wpsplanname = "Feeds";
-	 parameters.site = "";
-	 parameters.jsessionid = '<%=session.getId()%>';
-} 
-</script>
-<!-- Enable Browser History by replacing useBrowserHistory tokens with two hyphens -->
-<!-- BEGIN Browser History required section -->
-<link rel="stylesheet" type="text/css" href="./client/history/history.css" />
-<script type="text/javascript" src="./client/history/history.js"></script>
-<!-- END Browser History required section -->  
-
-<script type="text/javascript" src="./client/swfobject.js"></script>
-<script type="text/javascript">
-    var swfVersionStr = "10.0.0";
-    var xiSwfUrlStr = "./client/playerProductInstall.swf";
-    var flashvars = {};
-	JMIF_CompleteParameters( flashvars);
-    flashvars.analysisProfile = "GlobalProfile";
-    flashvars.feed = "<%=java.net.URLEncoder.encode(feed, "UTF-8")%>";
-    flashvars.track = "feed";
-    var params = {};
-    params.quality = "high";
-    params.bgcolor = "#FFFFFF";
-    params.allowscriptaccess = "always";
-    params.allowfullscreen = "true";
-    params.fullScreenOnSelection = "true";
-    params.wmode = "transparent";
-    var attributes = {};
-    attributes.id = "wps-feeds";
-    attributes.name = "wps-feeds";
-    attributes.align = "middle";
-    swfobject.embedSWF(
-        "./client/jmi-flex-1.0-SNAPSHOT.swf", "flashContent", 
-        "100%", "550px", 
-        swfVersionStr, xiSwfUrlStr, 
-        flashvars, params, attributes);
-swfobject.createCSS("#flashContent", "display:block;text-align:left;");
+	breadcrumbTitles.shortTitle = "Centered";
+	breadcrumbTitles.longTitle = "Centered on item: " + args[1];
+	map.compute( parameters);
+}
+<%if( feed.length() > 0) {%>
+$(document).ready(function() {
+	var parameters = {};
+	JMIF_CompleteParameters( parameters);
+	parameters.analysisProfile = "GlobalProfile";
+	parameters.feed = "<%=feed%>";
+	parameters.track = "feed";
+	var map = JMI.Map({
+				parent: 'map', 
+				//server: 'http://localhost:8080/jmi-server/', 
+				swf: './jmi-client/jmi-flex-1.0-SNAPSHOT.swf'
+				//client: JMI.Map.SWF
+			});
+	map.addEventListener(JMI.Map.event.READY, function(event) {
+		  var titles = event.map.getProperty( "$FEEDS_TITLES");
+		  if( titles) {
+		  	document.title = titles.join( ', ') + ' | Just Map It! Feeds - ';
+			if( event.map.getProperty( "$analysisProfile") == "GlobalProfile") {
+				breadcrumbTitles.shortTitle = "Initial map";
+				breadcrumbTitles.longTitle = titles.join( ', ');
+			}
+		  }
+		  var urls = event.map.getProperty( "$FEEDS_URLS");
+		  if( urls && urls.length == 1) {
+			var data = {};
+			data.url = urls[0];
+			$.getJSON( "./rest/feeds/feed.json", data, function( feed){
+				var date = new Date();
+				if( !feed.thumbnail_date)
+					feed.thumbnail_date = 0;
+				var delta = date.getTime() - feed.thumbnail_date;
+				if( delta > 7 * 24 * 3600 * 1000) {
+					$.post(
+						  //'http://feeds.just-map-it.com/rest/feeds/feed/thumbnail.png',
+						  parameters.feedsserverurl + '/rest/feeds/feed/thumbnail.png',
+						  {url:urls[0],width:150,height:100,mime:'image/png',filedata: event.map.getImage('image/png', 150, 100, true)}
+					);
+				}
+			});
+		  }
+	} );
+	map.addEventListener(JMI.Map.event.ACTION, function(event) {
+		window[event.fn](event.map, event.args);
+	} );
+	map.addEventListener(JMI.Map.event.EMPTY, function(event) {
+	} );
+	map.addEventListener(JMI.Map.event.ERROR, function(event) {
+	} );
+	var breadcrumb = new JMI.extensions.Breadcrumb('breadcrumb',map,{'namingFunc':JMIF_breadcrumbTitlesFunc,'thumbnail':{}});
+	map.compute( parameters);
+});
 <%}%>
 </script>
 <jsp:include page="./js/ga.js" /> 
@@ -174,7 +172,8 @@ swfobject.createCSS("#flashContent", "display:block;text-align:left;");
 			<input type="text" class="champ" name="feed" title="URLs" value='<%=feed%>' />
 			<input type="submit" value="Just Map It!" />
 		</form>
-		<p id="message"></p>
+		<!-- p id="message"></p-->
+		<div id="breadcrumb">&nbsp;</div>
 	</div>
 </div>
 <%if (feed.length() == 0) {%>
@@ -201,24 +200,7 @@ for( long i = 0; i < maxPages; ++i) { %>
 You can also add Just Map It! Feeds to: <h3><a href="http://www.google.com/ig/adde?moduleurl=feeds.just-map-it.com/google/igoogle-social-computing-feeds.xml" title="Add Just Map It! Feeds to iGoogle" target="_blank">iGoogle</a></h3><h3><a href="http://eco.netvibes.com/widgets/470252/just-map-it-feeds" title="Add Just Map It! Feeds to Netvibes" target="_blank">Netvibes</a></h3><h3><a id="howtoblogger" href="./documentation.jsp" title="Add Just Map It! Feeds to Blogger" target="_blank">Blogger</a></h3>
 </div>
 <%} else {%>
-<div id="flashContent">
-    <p>
-     	To view this page ensure that Adobe Flash Player version 10.0.0 or greater is installed. 
-	</p>
-	<script type="text/javascript"> 
-	var pageHost = ((document.location.protocol == "https:") ? "https://" :	"http://"); 
-	document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='" 
-					+ pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>" ); 
-	</script> 
- </div>
- <noscript>
-     	<br/><br/><br/><p> 
-     		Either scripts and active content are not permitted to run or Adobe Flash Player version 10.0.0 or greater is not installed.
-     	</p>
-        <a href="http://www.adobe.com/go/getflashplayer">
-            <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
-        </a>
-</noscript>		
+<div id="map"></div>
 <%}%>
 </div>
 <jsp:include page="./footer.jsp" >

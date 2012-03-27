@@ -9,19 +9,24 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import sun.misc.BASE64Decoder;
 
 import com.socialcomputing.feeds.utils.HibernateUtil;
 import com.sun.jersey.api.Responses;
@@ -31,6 +36,7 @@ import com.sun.jersey.multipart.FormDataParam;
 
 @Path("/feeds")
 public class FeedManager {
+    private static final String IMAGE_PREFIX = "data:image/png;base64,";
     private static final Logger LOG = LoggerFactory.getLogger(FeedManager.class);
 
     @GET
@@ -186,6 +192,42 @@ public class FeedManager {
         return null;
     }
     
+    @POST
+    @Path("/feed/thumbnail.png")
+    @Consumes( MediaType.APPLICATION_FORM_URLENCODED) 
+    public void putThumbnail2( 
+                   @Context UriInfo uriInfo,
+                   @FormParam("url") String url,
+                   @FormParam("filedata") String data,
+                   @FormParam("width") int width,
+                   @FormParam("height") int height,
+                   @FormParam("mime") String mime
+                   ) {
+        Feed feed = feed( url); 
+        try {
+            if( feed != null) {
+                Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+                if( data.startsWith(IMAGE_PREFIX)) {
+                    BASE64Decoder decoder = new BASE64Decoder();
+                    feed.setThumbnail( decoder.decodeBuffer(data.substring(IMAGE_PREFIX.length())));
+                }
+                else 
+                    feed.setThumbnail( data.getBytes());
+                feed.setThumbnail_date( new Date());
+                feed.setThumbnail_height( height);
+                feed.setThumbnail_width( width);
+                feed.setThumbnail_mime( mime);
+                session.update( feed);
+            }
+            else
+                Response.status( Responses.NOT_FOUND);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Deprecated
     @POST
     @Path("/feed/thumbnail.png")
     @Consumes( MediaType.MULTIPART_FORM_DATA) 
