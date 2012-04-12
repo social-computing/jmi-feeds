@@ -48,7 +48,6 @@ function JMIF_Center( map, args)
 	map.compute( parameters);
 }
 <%if(request.getParameter("url") != null && request.getParameter("url").length()>0){ %>
-$(document).ready(function() {
 	var parameters = {};
 	JMIF_CompleteParameters( parameters);
 	parameters.analysisProfile = "GlobalProfile";
@@ -72,5 +71,4 @@ $(document).ready(function() {
 	} );
 	var breadcrumb = new JMI.extensions.Breadcrumb(breadcrumbid,map,{'namingFunc':JMIF_breadcrumbTitlesFunc,'thumbnail':{}});
 	map.compute( parameters);
-});
 <%} %>
