@@ -30,17 +30,17 @@ widget.onLoad = function() {
 	var div = widget.createElement( 'div',  { 'style': 'margin: 0 auto;text-align:center;'} );	
 	var object = widget.createElement( 'object',  
 		{ 	'type': 'application/x-shockwave-flash',
-			'data': 'http://feeds.just-map-it.com/client/jmi-flex-1.0-SNAPSHOT.swf',
+			'data': 'http://feeds.just-map-it.com/jmi-client/swf/jmi-flex-1.0-SNAPSHOT.swf',
 			'id': 'wps-feeds',
 			'name': 'wps-feeds',
 			'width': widget.body.getDimensions().width-20,
 			'height': widget.body.getDimensions().width-20
 		 });
 	addParams( object, fv);
-	object.appendChild( widget.createElement( 'param', { 'name':'movie', 'value':'http://feeds.just-map-it.com/client/jmi-flex-1.0-SNAPSHOT.swf'}));
+	object.appendChild( widget.createElement( 'param', { 'name':'movie', 'value':'http://feeds.just-map-it.com/jmi-client/swf/jmi-flex-1.0-SNAPSHOT.swf'}));
 	var embed = widget.createElement( 'embed',  
 		{ 	'type': 'application/x-shockwave-flash',
-			'src': 'http://feeds.just-map-it.com/client/jmi-flex-1.0-SNAPSHOT.swf',
+			'src': 'http://feeds.just-map-it.com/jmi-client/swf/jmi-flex-1.0-SNAPSHOT.swf',
 			'id': 'wps-feeds',
 			'name': 'wps-feeds',
 			'align': 'middle',

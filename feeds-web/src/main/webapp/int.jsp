@@ -69,9 +69,9 @@ params.allowscriptaccess = "always";
 params.allowfullscreen = "true";
 params.wmode = "opaque";
 swfobject.embedSWF(
-    "http://feeds.just-map-it.com/client/jmi-flex-1.0-SNAPSHOT.swf", mapid, 
+    "http://feeds.just-map-it.com/jmi-client/swf/jmi-flex-1.0-SNAPSHOT.swf", mapid, 
     "<%=request.getParameter("w")%>", "<%=request.getParameter("h")%>", 
-    "10.0.0", "http://feeds.just-map-it.com/client/playerProductInstall.swf", 
+    "10.0.0", "http://feeds.just-map-it.com/jmi-client/swf/expressInstall.swf", 
     flashvars, params);
 document.write( "<div id='" + mapid + "'>");
 var pageHost = ((document.location.protocol == "https:") ? "https://" :	"http://"); 

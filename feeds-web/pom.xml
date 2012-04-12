@@ -114,6 +114,15 @@
       <version>1.0-SNAPSHOT</version>
     </dependency>
     
+	<!-- Jmi client -->
+    <dependency>
+      <groupId>com.socialcomputing.jmi.jmi-client</groupId>
+      <artifactId>jmi-canvas</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <type>jar</type>
+      <scope>runtime</scope>      
+    </dependency>
+
     <dependency>
       <groupId>com.socialcomputing.jmi.jmi</groupId>
       <artifactId>jmi-flex</artifactId>
@@ -156,6 +165,21 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.1.1</version>
+        <configuration>
+          <overlays>
+            <overlay>
+              <groupId>com.socialcomputing.jmi.jmi-client</groupId>
+              <artifactId>jmi-canvas</artifactId>
+              <type>jar</type>
+              <targetPath>/</targetPath>
+            </overlay>
+          </overlays>          
+        </configuration>
       </plugin>
 	</plugins>
 	<pluginManagement>

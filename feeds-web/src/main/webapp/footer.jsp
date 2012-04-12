@@ -18,7 +18,7 @@ if( feed.length() > 0) { %>
             <ul id="copy">
             	<li>© 2011 - 2012 <a title="Social Computing" href="http://www.social-computing.com" target="_blank">Social Computing</a> | </li>
                 <li><a title="Terms of use" href="./termsofuse.jsp">Terms of use</a> | </li>
-                <li>Powered by <a title="Just Map It!" href="http://www.social-computing.com/offre/cartographie-just-map-it/" target="_blank">Just Map It!</a></li>
+                <li>Powered by <a title="Just Map It!" href="http://www.just-map-it.com" target="_blank">Just Map It!</a></li>
             </ul>
             
         </div>

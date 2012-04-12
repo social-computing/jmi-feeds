@@ -48,7 +48,7 @@ if( feed.length() == 0) {
 <meta property="og:description" content="View and navigate your feeds thru an interactive map! by Social Computing" />
 <meta property="og:image" content="http://feeds.just-map-it.com/images/thumbnail.png" />
 <link rel="shortcut icon" href="http://feeds.just-map-it.com/favicon.ico" />
-<link rel="stylesheet" type="text/css" href="./jmi-client/jmi-client.css" />
+<link rel="stylesheet" type="text/css" href="./jmi-client/css/jmi-client.css" />
 <jsp:include page="./head-header.jsp" />
 <script type="text/javascript" src="./jmi-client/jmi-client.js"></script>
 <script type="text/javascript">
@@ -105,7 +105,7 @@ $(document).ready(function() {
 	var map = JMI.Map({
 				parent: 'map', 
 				//server: 'http://localhost:8080/jmi-server/', 
-				swf: './jmi-client/jmi-flex-1.0-SNAPSHOT.swf'
+				swf: './jmi-client/swf/jmi-flex-1.0-SNAPSHOT.swf'
 				//client: JMI.Map.SWF
 			});
 	map.addEventListener(JMI.Map.event.READY, function(event) {
