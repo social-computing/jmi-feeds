@@ -1,81 +1,76 @@
 <%response.setContentType("text/javascript");%>
-<jsp:include page="./client/swfobject.js" /> 
+<jsp:include page="./jmi-client/jmi-client.js" /> 
 var d = new Date();
-var embedid = "embed" + d.getTime();
-var messageid = "message" + d.getTime();
+var breadcrumbid = "message" + d.getTime();
 var mapid = "map" + d.getTime();
-function display( message, error) {
-<%String url = request.getParameter("url"); 
-if( url == null) url= "";
-String m=request.getParameter("m");
-if( m != null && m.length() > 0) {%>
-if( document.getElementById('<%=m%>'))
- document.getElementById('<%=m%>').innerHTML = message;
-else
-; //if( error) alert( message);
-<%} else { %>
- ;//if( error) alert( message);
-<%}%>
+document.write( '<link rel="stylesheet" type="text/css" href="http://feeds.just-map-it.com/jmi-client/css/jmi-client.css" />');
+document.write( "<div id='" + breadcrumbid + "'>&nbsp;</div>");
+document.write( "<div id='" + mapid + "' style='width:<%=request.getParameter("w")%>px;height:<%=request.getParameter("h")%>px'></div>");
+var JMIbreadcrumbTitles = { shortTitle: '', longTitle: '' };
+function JMIF_breadcrumbTitlesFunc(event) {
+	if( event.type === JMI.Map.event.EMPTY) {
+		return {shortTitle: 'Sorry, the map is empty. Does the feed contains categories?', longTitle: 'Sorry, the map is empty. Does the feed contains categories?'};
+	}
+	if( event.type === JMI.Map.event.ERROR) {
+		return {shortTitle: 'Sorry, an error occured. Is this URL correct?', longTitle: 'Sorry, an error occured. Error: ' + event.message};
+	}
+	return JMIbreadcrumbTitles;
 }
-function JMIF_empty() {
- display( "Sorry, the map is empty. Does the feed contains categories?", true);
+function JMIF_CompleteParameters( parameters) {
+     parameters.feedsserverurl = "http://feeds.just-map-it.com";
+	 parameters.map = "Feeds";
+	 parameters.track = "site";
+	 parameters.site = window.location.href;
+	 parameters.jsessionid = '<%=session.getId()%>';
+} 
+function JMIF_Navigate( map, url) {
+	 window.open( url, "_blank");
 }
-function JMIF_error( error) {
- display( "Sorry, an error occured. Is this URL correct?", true);
-}
-function JMIF_Navigate( url) {
-	window.open( url, "_blank");
-}
-function JMIF_Focus( args) {
+function JMIF_Focus( map, args)
+{
 	var parameters = {};
 	JMIF_CompleteParameters( parameters);
 	parameters.entityId = args[0];
 	parameters.feed = args[2];
- 	parameters.track = "";
-	document.getElementById(mapid).compute( parameters);
-	display( "<i>Focus on category:</i> " + args[1], false);
+	JMIbreadcrumbTitles.shortTitle = "Focus";
+	JMIbreadcrumbTitles.longTitle = "Focus on category: " + args[1];
+	map.compute( parameters);
 }
- function JMIF_Center( args) {
+function JMIF_Center( map, args)
+{
 	var parameters = {};
 	JMIF_CompleteParameters( parameters);
 	parameters.attributeId = args[0];
-	parameters.analysisProfile = "DiscoveryProfile";
 	parameters.feed = args[2];
- 	parameters.track = "";
- 	document.getElementById(mapid).compute( parameters);
-	display( "<i>Centered on item:</i> " + args[1], false);
- }
-function JMIF_CompleteParameters( parameters) {
-	 parameters.allowDomain = "*";
-	 parameters.wpsserverurl = "http://server.just-map-it.com";
-     parameters.feedsserverurl = "http://feeds.just-map-it.com";
-	 parameters.wpsplanname = "Feeds";
-	 parameters.site = "";
-	 parameters.emptyCallback = "JMIF_empty";
-	 parameters.errorCallback = "JMIF_error";
-	 parameters.jsessionid = '<%=session.getId()%>';
-} 
+	parameters.analysisProfile = "DiscoveryProfile";
+	JMIbreadcrumbTitles.shortTitle = "Centered";
+	JMIbreadcrumbTitles.longTitle = "Centered on item: " + args[1];
+	map.compute( parameters);
+}
 <%if(request.getParameter("url") != null && request.getParameter("url").length()>0){ %>
-var flashvars = {};
-JMIF_CompleteParameters( flashvars);
-flashvars.analysisProfile = "GlobalProfile";
-flashvars.feed = "<%=java.net.URLEncoder.encode(url, "UTF-8")%>";
-flashvars.track = "site";
-flashvars.site = window.location.href;
-var params = {};
-params.quality = "high";
-params.bgcolor = "#FFFFFF";
-params.allowscriptaccess = "always";
-params.allowfullscreen = "true";
-params.wmode = "opaque";
-swfobject.embedSWF(
-    "http://feeds.just-map-it.com/jmi-client/swf/jmi-flex-1.0-SNAPSHOT.swf", mapid, 
-    "<%=request.getParameter("w")%>", "<%=request.getParameter("h")%>", 
-    "10.0.0", "http://feeds.just-map-it.com/jmi-client/swf/expressInstall.swf", 
-    flashvars, params);
-document.write( "<div id='" + mapid + "'>");
-var pageHost = ((document.location.protocol == "https:") ? "https://" :	"http://"); 
-document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='" 
-				+ pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>" ); 
-document.write( "</div>");
+$(document).ready(function() {
+	var parameters = {};
+	JMIF_CompleteParameters( parameters);
+	parameters.analysisProfile = "GlobalProfile";
+	parameters.feed = "<%=request.getParameter("url")%>";
+	parameters.track = "feed";
+	var map = JMI.Map({
+				parent: mapid, 
+				swf: 'http://feeds.just-map-it.com/jmi-client/swf/jmi-flex-1.0-SNAPSHOT.swf'
+			});
+	map.addEventListener(JMI.Map.event.READY, function(event) {
+		  var titles = event.map.getProperty( "$FEEDS_TITLES");
+		  if( titles) {
+			if( event.map.getProperty( "$analysisProfile") == "GlobalProfile") {
+				JMIbreadcrumbTitles.shortTitle = "Initial map";
+				JMIbreadcrumbTitles.longTitle = titles.join( ', ');
+			}
+		  }
+	} );
+	map.addEventListener(JMI.Map.event.ACTION, function(event) {
+		window[event.fn](event.map, event.args);
+	} );
+	var breadcrumb = new JMI.extensions.Breadcrumb(breadcrumbid,map,{'namingFunc':JMIF_breadcrumbTitlesFunc,'thumbnail':{}});
+	map.compute( parameters);
+});
 <%} %>

@@ -14,8 +14,8 @@
 <body>
 <%String feed = request.getParameter("feed");
 if( feed==null) feed="";
-String m = request.getParameter("m");
-if( m==null) m = "message";
+String b = request.getParameter("b");
+if( b==null) b = "yes";
 String w = request.getParameter("w");
 if( w==null || w.length() == 0) w = "500";
 String h = request.getParameter("h");
@@ -48,7 +48,6 @@ if( h==null || h.length() == 0) h = "500";
 	<tr><td></td><td><input type="text" name="feed" size="60" value="<%=feed%>"/></td></tr>
 	<tr><td>Width *</td><td><input type="text" name="w" size="10" value="<%=w%>"/></td></tr>
 	<tr><td>Height *</td><td><input type="text" name="h" size="10" value="<%=w%>"/></td></tr>
-	<tr><td>Div id for message</td><td><input type="text" name="m" size="10" value="<%=m%>"/></td></tr>
 	<tr><td></td><td>* required</td></tr>
 	<tr><td></td><td><input type="submit" value="Get code"/></td></tr>
 	</table>	
@@ -57,14 +56,13 @@ if( h==null || h.length() == 0) h = "500";
 </td><td  style="vertical-align:top;">
 <div id="preview" style="width:500px;height:330px">
 	<h2>2 - Preview - 500 * 300px</h2>
-	<div id="message"><i>Here is a div with id='message'</i></div>
 	<script type="text/javascript" src="./int.jsp?url=<%=java.net.URLEncoder.encode(feed, "UTF-8")%>&m=message&w=500&h=300"></script>
 </div>
 </td></tr>
 <tr><td colspan="2">
 <div id="code">
 	<h2>3 - Copy this code in your page</h2>
-	<textarea name="code" readonly="readonly" style="width:100%">&lt;script type="text/javascript" src="http://feeds.just-map-it.com/int.jsp?url=<%=java.net.URLEncoder.encode(feed, "UTF-8")%>&amp;m=<%=java.net.URLEncoder.encode(m, "UTF-8")%>&amp;w=<%=w%>&amp;h=<%=h%>"&gt;&lt;/script&gt;</textarea> 
+	<textarea name="code" readonly="readonly" style="width:100%">&lt;script type="text/javascript" src="http://feeds.just-map-it.com/int.jsp?url=<%=java.net.URLEncoder.encode(feed, "UTF-8")%>&amp;w=<%=w%>&amp;h=<%=h%>"&gt;&lt;/script&gt;</textarea> 
 </div>
 </td></tr>
 </table>
