@@ -105,7 +105,7 @@ $(document).ready(function() {
 	var map = JMI.Map({
 				parent: 'map', 
 				//server: 'http://localhost:8080/jmi-server/', 
-				swf: './jmi-client/swf/jmi-flex-1.0-SNAPSHOT.swf'
+				clientUrl: './jmi-client/'
 				//client: JMI.Map.SWF
 			});
 	map.addEventListener(JMI.Map.event.READY, function(event) {

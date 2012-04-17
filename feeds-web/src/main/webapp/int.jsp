@@ -55,7 +55,7 @@ function JMIF_Center( map, args)
 	parameters.track = "feed";
 	var map = JMI.Map({
 				parent: mapid, 
-				swf: 'http://feeds.just-map-it.com/jmi-client/swf/jmi-flex-1.0-SNAPSHOT.swf'
+				clientUrl: 'http://feeds.just-map-it.com/jmi-client/'
 			});
 	map.addEventListener(JMI.Map.event.READY, function(event) {
 		  var titles = event.map.getProperty( "$FEEDS_TITLES");
