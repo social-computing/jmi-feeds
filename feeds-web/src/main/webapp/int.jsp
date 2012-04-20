@@ -70,5 +70,6 @@ function JMIF_Center( map, args)
 		window[event.fn](event.map, event.args);
 	} );
 	var breadcrumb = new JMI.extensions.Breadcrumb(breadcrumbid,map,{'namingFunc':JMIF_breadcrumbTitlesFunc,'thumbnail':{}});
+	new JMI.extensions.Slideshow(map);
 	map.compute( parameters);
 <%} %>
