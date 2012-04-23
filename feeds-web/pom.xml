@@ -16,7 +16,20 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <yui.compressor.version>1.3.0</yui.compressor.version>
   </properties>
+  
+  <pluginRepositories>
+    <pluginRepository>
+      <name>oss.sonatype.org</name>
+      <id>oss.sonatype.org</id>
+      <url>http://oss.sonatype.org/content/groups/public</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>croche-releases</id>
+      <url>http://croche.googlecode.com/svn/repository/releases</url>
+    </pluginRepository>
+  </pluginRepositories>
   
   <dependencies>
     <dependency>
@@ -169,6 +182,68 @@
           </overlays>          
         </configuration>
       </plugin>
+	<plugin>
+		<groupId>croche.maven</groupId>
+		<artifactId>maven-merge-file-plugin</artifactId>
+		<executions>
+			<execution>
+				<id>merge-igoogle</id>
+				<phase>process-resources</phase>
+				<goals>
+					<goal>merge</goal>
+				</goals>
+				<configuration>
+					<merges>
+						<merge>
+							<targetFile>src/main/webapp/google/igoogle-social-computing-feeds.xml</targetFile>
+							<sourceDirs>
+								<sourceDir>src/main/webapp/google/src</sourceDir>
+								<sourceDir>target/feeds-web/jmi-client/</sourceDir>
+							</sourceDirs>
+                            <nameContainsOrderings>
+                            <nameContainsOrdering>igoogle-social-computing-feeds-first</nameContainsOrdering>
+                            <nameContainsOrdering>jmi-client</nameContainsOrdering>
+                            <nameContainsOrdering>igoogle-social-computing-feeds-last</nameContainsOrdering>
+                            </nameContainsOrderings>
+							<includes>
+								<include>igoogle-social-computing-feeds-first.xml</include>
+								<include>jmi-client.js</include>
+								<include>igoogle-social-computing-feeds-last.xml</include>
+							</includes>
+						</merge>
+					</merges>
+				</configuration>
+			</execution>
+			<execution>
+				<id>merge-blogger</id>
+				<phase>process-resources</phase>
+				<goals>
+					<goal>merge</goal>
+				</goals>
+				<configuration>
+					<merges>
+						<merge>
+							<targetFile>src/main/webapp/google/blogger-social-computing-feeds.xml</targetFile>
+							<sourceDirs>
+								<sourceDir>src/main/webapp/google/src</sourceDir>
+								<sourceDir>target/feeds-web/jmi-client/</sourceDir>
+							</sourceDirs>
+                            <nameContainsOrderings>
+                            <nameContainsOrdering>blogger-social-computing-feeds-first</nameContainsOrdering>
+                            <nameContainsOrdering>jmi-client</nameContainsOrdering>
+                            <nameContainsOrdering>blogger-social-computing-feeds-last</nameContainsOrdering>
+                            </nameContainsOrderings>
+							<includes>
+								<include>blogger-social-computing-feeds-first.xml</include>
+								<include>jmi-client.js</include>
+								<include>blogger-social-computing-feeds-last.xml</include>
+							</includes>
+						</merge>
+					</merges>
+				</configuration>
+			</execution>
+		</executions>
+	</plugin>
 	</plugins>
 	<pluginManagement>
 		<plugins>
