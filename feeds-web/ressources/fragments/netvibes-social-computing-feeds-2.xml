@@ -1,0 +1,76 @@
+widget.onLoad = function() {
+	var parameters = {};
+	JMIF_CompleteParameters( parameters);
+	parameters.analysisProfile = "GlobalProfile";
+	parameters.feed = widget.getValue( "feed");
+	parameters.track = "feed";
+	var dimension = widget.body.getDimensions();
+	var div = widget.createElement( 'div',  { 'style': 'margin: 0;width:' + (dimension.width-14) + 'px;height:'+ (dimension.width+14) +'px'} );	
+	widget.setBody( div);
+	widget.setTitle( 'Just Map It! Feeds');
+	//widget.onResize();
+	var map = JMI.Map({
+				parent: div, 
+				clientUrl: 'http://feeds.just-map-it.com/jmi-client/',
+				client: JMI.Map.SWF
+			});
+	map.addEventListener(JMI.Map.event.READY, function(event) {
+	    var titles = event.map.getProperty( "$FEEDS_TITLES");
+		if( map.getProperty( "$analysisProfile") == "GlobalProfile" && titles) {
+			widget.setTitle( 'Just Map It! Feeds - ' + titles.join( ', '));
+		}
+	} );
+	map.addEventListener(JMI.Map.event.ACTION, function(event) {
+		window[event.fn](event.map, event.args);
+	} );
+	map.addEventListener(JMI.Map.event.EMPTY, function(event) {
+		widget.setTitle( 'Just Map It! Feeds');
+		widget.setBody( "Sorry, the map is empty. Does the feed contains categories?");
+	} );
+	map.addEventListener(JMI.Map.event.ERROR, function(event) {
+		widget.setTitle( 'Just Map It! Feeds');
+		widget.setBody( 'Sorry, an error occured. Is this URL correct? ' + event.message);
+	} );
+	//new JMI.extensions.Breadcrumb('jmi-breadcrumb',map,{'namingFunc':JMIF_breadcrumbTitlesFunc,'thumbnail':{}});
+	new JMI.extensions.Slideshow(map);
+	map.compute( parameters);
+};
+function JMIF_Navigate(map, url) {
+	window.open( url, "_blank");
+};
+function JMIF_Focus(map, args) {
+	var parameters = {};
+	JMIF_CompleteParameters( parameters);
+	parameters.entityId = args[0];
+	parameters.feed = args[2];
+	map.compute( parameters);
+};
+function JMIF_Center(map, args) {
+	var parameters = {};
+	JMIF_CompleteParameters( parameters);	
+	parameters.attributeId = args[0];
+	parameters.analysisProfile = "DiscoveryProfile";
+	parameters.feed = args[2];
+	map.compute( parameters);
+};
+function JMIF_CompleteParameters( parameters) {
+     parameters.feedsserverurl = "http://feeds.just-map-it.com";
+	 parameters.map = "Feeds";
+	 parameters.track = "";
+	 parameters.site = "";
+	 parameters.jsessionid = "";
+};
+widget.onResize = function() {
+	var elements = widget.body.getElementsByTagName("object");
+	var flash = elements[elements.length-1];
+	if (flash) {
+		flash.width = widget.body.getDimensions().width;
+		flash.height = widget.body.getDimensions().height;
+	}
+};
+</script>
+</head>
+<body>
+<p>Loading...</p>
+</body>
+</html>

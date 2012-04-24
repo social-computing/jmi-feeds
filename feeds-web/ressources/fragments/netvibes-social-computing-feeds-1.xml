@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+<head>
+<title>Just Map It! Feeds</title>
+<meta name="author" content="Social Computing" />
+<meta name="email" content="justmapit@social-computing.com" />
+<meta name="website" content="http://www.social-computing.com" />
+<meta name="description" content="Just Map It! Feeds lets you view and navigate your feeds thru an interactive map! by Social Computing" />
+<meta name="keywords" content="rss, netvibes, google, blogger, feeds, feed, map, cartography, visualization, social, blog, gadget, widget, social computing, category, representation, information" />
+<meta name="version" content="1.0.1 beta" />
+<meta name="screenshot" content="http://feeds.just-map-it.com/images/screenshot.png" />
+<meta name="thumbnail" content="http://feeds.just-map-it.com/images/thumbnail.png" />
+<meta name="autoRefresh" content="120" />
+<link rel="shortcut icon" href="http://feeds.just-map-it.com/favicon.ico" />
+<style type="text/css">
+</style>
+<widget:preferences>
+	<preference name="feed" type="text" label="Feed" defaultValue="http://www.social-computing.com/feed/" />
+</widget:preferences>
+ <script type="text/javascript" >
+ 

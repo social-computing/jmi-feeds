@@ -9,7 +9,6 @@
   </parent>
   <groupId>com.socialcomputing.jmi.jmi-feeds</groupId>
   <artifactId>feeds-web</artifactId>
-  <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Just Map It ! - Feeds Web Application</name>
   <url>http://feeds.just-map-it.com</url>
@@ -140,20 +139,6 @@
       <scope>runtime</scope>      
     </dependency>
 
-    <dependency>
-      <groupId>com.socialcomputing.jmi.jmi</groupId>
-      <artifactId>jmi-flex</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      <type>swf</type>
-      <scope>runtime</scope>      
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    
     <!-- Compilation only dependencies -->
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -182,33 +167,33 @@
           </overlays>          
         </configuration>
       </plugin>
-	<plugin>
+	  <plugin>
 		<groupId>croche.maven</groupId>
 		<artifactId>maven-merge-file-plugin</artifactId>
 		<executions>
 			<execution>
 				<id>merge-igoogle</id>
 				<phase>process-resources</phase>
-				<goals>
-					<goal>merge</goal>
-				</goals>
+	            <goals>
+	              <goal>merge</goal>
+	            </goals>
 				<configuration>
 					<merges>
 						<merge>
 							<targetFile>src/main/webapp/google/igoogle-social-computing-feeds.xml</targetFile>
 							<sourceDirs>
-								<sourceDir>src/main/webapp/google/src</sourceDir>
+								<sourceDir>ressources/fragments</sourceDir>
 								<sourceDir>target/feeds-web/jmi-client/</sourceDir>
 							</sourceDirs>
                             <nameContainsOrderings>
-                            <nameContainsOrdering>igoogle-social-computing-feeds-first</nameContainsOrdering>
+                            <nameContainsOrdering>igoogle-social-computing-feeds-1</nameContainsOrdering>
                             <nameContainsOrdering>jmi-client</nameContainsOrdering>
-                            <nameContainsOrdering>igoogle-social-computing-feeds-last</nameContainsOrdering>
+                            <nameContainsOrdering>igoogle-social-computing-feeds-2</nameContainsOrdering>
                             </nameContainsOrderings>
 							<includes>
-								<include>igoogle-social-computing-feeds-first.xml</include>
+								<include>igoogle-social-computing-feeds-1.xml</include>
 								<include>jmi-client.js</include>
-								<include>igoogle-social-computing-feeds-last.xml</include>
+								<include>igoogle-social-computing-feeds-2.xml</include>
 							</includes>
 						</merge>
 					</merges>
@@ -217,33 +202,61 @@
 			<execution>
 				<id>merge-blogger</id>
 				<phase>process-resources</phase>
-				<goals>
-					<goal>merge</goal>
-				</goals>
+	            <goals>
+	              <goal>merge</goal>
+	            </goals>
 				<configuration>
 					<merges>
 						<merge>
 							<targetFile>src/main/webapp/google/blogger-social-computing-feeds.xml</targetFile>
 							<sourceDirs>
-								<sourceDir>src/main/webapp/google/src</sourceDir>
+								<sourceDir>ressources/fragments</sourceDir>
 								<sourceDir>target/feeds-web/jmi-client/</sourceDir>
 							</sourceDirs>
                             <nameContainsOrderings>
-                            <nameContainsOrdering>blogger-social-computing-feeds-first</nameContainsOrdering>
+                            <nameContainsOrdering>blogger-social-computing-feeds-1</nameContainsOrdering>
                             <nameContainsOrdering>jmi-client</nameContainsOrdering>
-                            <nameContainsOrdering>blogger-social-computing-feeds-last</nameContainsOrdering>
+                            <nameContainsOrdering>blogger-social-computing-feeds-2</nameContainsOrdering>
                             </nameContainsOrderings>
 							<includes>
-								<include>blogger-social-computing-feeds-first.xml</include>
+								<include>blogger-social-computing-feeds-1.xml</include>
 								<include>jmi-client.js</include>
-								<include>blogger-social-computing-feeds-last.xml</include>
+								<include>blogger-social-computing-feeds-2.xml</include>
+							</includes>
+						</merge>
+					</merges>
+				</configuration>
+			</execution>
+			<execution>
+				<id>merge-netvibes</id>
+				<phase>process-resources</phase>
+	            <goals>
+	              <goal>merge</goal>
+	            </goals>
+				<configuration>
+					<merges>
+						<merge>
+							<targetFile>src/main/webapp/google/netvibes-social-computing-feeds.xml</targetFile>
+							<sourceDirs>
+								<sourceDir>ressources/fragments</sourceDir>
+								<sourceDir>target/feeds-web/jmi-client/</sourceDir>
+							</sourceDirs>
+                            <nameContainsOrderings>
+                            <nameContainsOrdering>netvibes-social-computing-feeds-1</nameContainsOrdering>
+                            <nameContainsOrdering>jmi-client</nameContainsOrdering>
+                            <nameContainsOrdering>netvibes-social-computing-feeds-2</nameContainsOrdering>
+                            </nameContainsOrderings>
+							<includes>
+								<include>netvibes-social-computing-feeds-1.xml</include>
+								<include>jmi-client.js</include>
+								<include>netvibes-social-computing-feeds-2.xml</include>
 							</includes>
 						</merge>
 					</merges>
 				</configuration>
 			</execution>
 		</executions>
-	</plugin>
+	  </plugin>
 	</plugins>
 	<pluginManagement>
 		<plugins>

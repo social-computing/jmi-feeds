@@ -1,28 +1,25 @@
- var prefs = new gadgets.Prefs();
+var prefs = new gadgets.Prefs();
 var parameters = {};
 JMIF_CompleteParameters( parameters);
 parameters.analysisProfile = "GlobalProfile";
 parameters.feed = prefs.getString( "feed");
 parameters.track = "feed";
+gadgets.window.setTitle( 'Just Map It! Feeds');
+var p = gadgets.views ? gadgets.views.getParams() : null;
+if( p) {
+ 	for (var prop in p) {
+ 		parameters[prop] = p[prop];
+	}
+}
 var map = JMI.Map({
 			parent: 'jmi-feeds', 
 			clientUrl: 'http://feeds.just-map-it.com/jmi-client/'
 		});
-		
-   var p = gadgets.views ? gadgets.views.getParams() : null;
-   if( p) {
-    	for (var prop in p) {
-    		parameters[prop] = p[prop];
-   		}
-   }
 map.addEventListener(JMI.Map.event.READY, function(event) {
     var titles = event.map.getProperty( "$FEEDS_TITLES");
 	if( map.getProperty( "$analysisProfile") == "GlobalProfile" && titles) {
 		gadgets.window.setTitle( 'Just Map It! Feeds - ' + titles.join( ', '));
 	}
-    else {
- 	    gadgets.window.setTitle( 'Just Map It! Feeds');
-    }
 } );
 map.addEventListener(JMI.Map.event.ACTION, function(event) {
 	window[event.fn](event.map, event.args);
@@ -37,24 +34,24 @@ map.addEventListener(JMI.Map.event.ERROR, function(event) {
 new JMI.extensions.Slideshow(map);
 map.compute( parameters);
 
-  function JMIF_Navigate(map, url) {
- 	 window.open( url, "_blank");
-  }
-  function JMIF_Focus(map, args) {
+function JMIF_Navigate(map, url) {
+	 window.open( url, "_blank");
+}
+function JMIF_Focus(map, args) {
 	var parameters = {};
 	JMIF_CompleteParameters( parameters);
 	parameters.entityId = args[0];
 	parameters.feed = args[2];
 	map.compute( parameters);
-  }
-  function JMIF_Center(map, args) {
+}
+function JMIF_Center(map, args) {
 	var parameters = {};
 	JMIF_CompleteParameters( parameters);
 	parameters.attributeId = args[0];
 	parameters.analysisProfile = "DiscoveryProfile";
 	parameters.feed = args[2];
-  	map.compute( parameters);
-  }
+ 	map.compute( parameters);
+}
 function JMIF_CompleteParameters( parameters) {
      parameters.feedsserverurl = "http://feeds.just-map-it.com";
 	 parameters.map = "Feeds";
