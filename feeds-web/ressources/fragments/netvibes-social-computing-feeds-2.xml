@@ -3,7 +3,6 @@ widget.onLoad = function() {
 	JMIF_CompleteParameters( parameters);
 	parameters.analysisProfile = "GlobalProfile";
 	parameters.feed = widget.getValue( "feed");
-	parameters.track = "feed";
 	var dimension = widget.body.getDimensions();
 	var div = widget.createElement( 'div',  { 'style': 'margin: 0;width:' + (dimension.width-14) + 'px;height:'+ (dimension.width+14) +'px'} );	
 	widget.setBody( div);

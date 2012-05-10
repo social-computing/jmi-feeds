@@ -5,7 +5,6 @@
 	JMIF_CompleteParameters( parameters);
 	parameters.analysisProfile = "GlobalProfile";
 	parameters.feed = viewFeeds.getPostsFeedUrl();
-	parameters.track = "feed";
 	var map = JMI.Map({
 				parent: 'jmi-feeds', 
 				clientUrl: 'http://feeds.just-map-it.com/jmi-client/'
