@@ -16,7 +16,7 @@ if( feed.length() > 0) { %>
             </ul>
             
             <ul id="copy">
-            	<li>© 2011 - 2012 <a title="Social Computing" href="http://www.social-computing.com" target="_blank">Social Computing</a> | </li>
+            	<li>&copy; 2011 - 2012 <a title="Social Computing" href="http://www.social-computing.com" target="_blank">Social Computing</a> | </li>
                 <li><a title="Terms of use" href="./termsofuse.jsp">Terms of use</a> | </li>
                 <li>Powered by <a title="Just Map It!" href="http://www.just-map-it.com" target="_blank">Just Map It!</a></li>
             </ul>
@@ -24,7 +24,7 @@ if( feed.length() > 0) { %>
         </div>
         
         <div id="zoneReseaux" class="grid_5">
-        	<p>Like JMIFeeds? Share it!</p>
+        	<p>Like JMI Feeds? Share it!</p>
             <!--div id="barreReseaux"></div-->
 			<div class="network">
 <table border="1"><tr>

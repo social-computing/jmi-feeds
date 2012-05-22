@@ -78,7 +78,7 @@ You can place the map directly on any webpage. <a target="_blank" title="Add it 
 <h3>The map is empty</h3>
 <p>Verify the feed contains items with categories.</p>
 <h3>Flash is not supported</h3>
-<p>The HTML5 client is coming soon...</p>
+<p>The HTML5 client is now available...</p>
 </div>
 </div>
 </body>

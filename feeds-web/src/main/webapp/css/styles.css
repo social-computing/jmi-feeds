@@ -280,6 +280,7 @@ div#breadcrumb {
 	min-height:210px;
 	width:100%;
 	background: #1d4467; /* Old browsers */
+	display: inline-block;
 
 /* IE9 SVG, needs conditional override of 'filter' to 'none' */
 
