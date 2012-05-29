@@ -8,7 +8,7 @@ if( spage != null) numpage = Integer.parseInt( spage);
 java.util.List<Feed> feeds = null;
 long feedsCount = 0;
 String title = "Just Map It! Feeds";
-String description = "Just Map It! Feeds lets you view and navigate your feeds thru an interactive map";
+String description = "Just Map It! Feeds lets you view and navigate your feeds thru an interactive HTML5 map";
 if( feed.length() == 0) {
     FeedManager feedManager = new FeedManager();
     feeds = feedManager.last( numpage*10, 10, "true");
@@ -40,7 +40,7 @@ if( feed.length() == 0) {
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="content-language" content="en" />
 <meta name="description" content="<%=description%>" />
-<meta name="keywords" content="rss, netvibes, google, blogger, feeds, feed, map, cartography, visualization, social, blog, gadget, widget, social computing, category, representation, information" />
+<meta name="keywords" content="HTML5, canvas, rss, netvibes, google, blogger, feeds, feed, map, cartography, visualization, social, blog, gadget, widget, social computing, category, representation, information" />
 <meta name="author" content="Social Computing" /> 
 <meta name="robots" content="all" /> 
 <meta name="viewport" content="target- densitydpi=device-dpi, width=device-width, user-scalable=no"/>
