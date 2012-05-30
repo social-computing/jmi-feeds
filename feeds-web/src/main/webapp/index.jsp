@@ -48,8 +48,8 @@ if( feed.length() == 0) {
 <meta property="og:description" content="View and navigate your feeds thru an interactive map! by Social Computing" />
 <meta property="og:image" content="http://feeds.just-map-it.com/images/thumbnail.png" />
 <link rel="shortcut icon" href="http://feeds.just-map-it.com/favicon.ico" />
-<link rel="stylesheet" type="text/css" href="./jmi-client/css/jmi-client.css" />
 <jsp:include page="./head-header.jsp" />
+<link rel="stylesheet" type="text/css" href="./jmi-client/css/jmi-client.css" />
 <script type="text/javascript" src="./jmi-client/jmi-client.js"></script>
 <script type="text/javascript">
 var breadcrumbTitles = { shortTitle: '', longTitle: '' };
