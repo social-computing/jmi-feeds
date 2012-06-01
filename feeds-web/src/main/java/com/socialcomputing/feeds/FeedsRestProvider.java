@@ -1,7 +1,9 @@
 package com.socialcomputing.feeds;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -181,24 +183,29 @@ public class FeedsRestProvider {
         String title = channel.getChildText( "title");
         int count = 0;
         for( Element item : (List<Element>)channel.getChildren( "item")) {
-            Attribute attribute = storeHelper.addAttribute( item.getChildText( "link"));
-            attribute.addProperty( "name", item.getChildText( "title"));
-            
-            // RSS2
-            for( Element category : (List<Element>)item.getChildren( "category")) {
-                Entity entity = storeHelper.addEntity( category.getText());
-                entity.addProperty( "name", entity.getId());
-                entity.addAttribute( attribute, 1);
-                ++ count;
+            Attribute attribute;
+            try {
+                attribute = storeHelper.addAttribute( URLDecoder.decode( item.getChildText( "link"), "UTF-8"));
+                attribute.addProperty( "name", item.getChildText( "title"));
+                
+                // RSS2
+                for( Element category : (List<Element>)item.getChildren( "category")) {
+                    Entity entity = storeHelper.addEntity( category.getText());
+                    entity.addProperty( "name", entity.getId());
+                    entity.addAttribute( attribute, 1);
+                    ++ count;
+                }
+                // DC
+                Namespace ns = Namespace.getNamespace( "dc", "http://purl.org/dc/elements/1.1/");
+                for( Element subject : (List<Element>)item.getChildren( "subject", ns)) {
+                    String sbj = subject.getText();
+                    Entity entity = storeHelper.addEntity( sbj);
+                    entity.addProperty( "name", sbj);
+                    entity.addAttribute( attribute, 1);
+                    ++ count;
+                }
             }
-            // DC
-            Namespace ns = Namespace.getNamespace( "dc", "http://purl.org/dc/elements/1.1/");
-            for( Element subject : (List<Element>)item.getChildren( "subject", ns)) {
-                String sbj = subject.getText();
-                Entity entity = storeHelper.addEntity( sbj);
-                entity.addProperty( "name", sbj);
-                entity.addAttribute( attribute, 1);
-                ++ count;
+            catch (UnsupportedEncodingException e) {
             }
         }
         urls.add( url);
