@@ -268,7 +268,7 @@ div#breadcrumb {
 	text-align: left;	
 }
 
-.jmi-breadcrumb li {
+.jmi-breadcrumb li, .jmi-breadcrumb a {
 	color: #f59c23;
 	font-size: 14px;
 	font-weight: bold;

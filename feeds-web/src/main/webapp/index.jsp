@@ -58,7 +58,12 @@ function JMIF_breadcrumbTitlesFunc(event) {
 		return {shortTitle: 'Sorry, the map is empty. Does the feed contains categories?', longTitle: 'Sorry, the map is empty. Does the feed contains categories?'};
 	}
 	if( event.type === JMI.Map.event.ERROR) {
-		return {shortTitle: 'Sorry, an error occured. Is this URL correct?', longTitle: 'Sorry, an error occured. Error: ' + event.message};
+		if(event.track) {
+			return {shortTitle: 'Sorry, an error occured. Is this URL correct? <br/>If this URL is a good one and you want to know more about that error, please <a title="Fill the form" href="http://www.just-map-it.com/p/report.html?track='+ event.track +'" target="_blank">fill this form</a>', longTitle: 'Sorry, an error occured. Error: ' + event.message};
+		}
+		else {
+			return {shortTitle: 'Sorry, an error occured.', longTitle: 'Sorry, an error occured. Error: ' + event.message};
+		}
 	}
 	return breadcrumbTitles;
 }
