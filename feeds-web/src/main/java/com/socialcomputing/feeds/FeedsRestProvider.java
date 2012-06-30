@@ -1,5 +1,7 @@
 package com.socialcomputing.feeds;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -12,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -43,7 +44,7 @@ public class FeedsRestProvider {
     public String kind(@Context HttpServletRequest request,  @DefaultValue("") @QueryParam("url") String urls, @DefaultValue("") @QueryParam("track") String track, @DefaultValue("") @QueryParam("site") String site) {
         HttpSession session = request.getSession(true);
         String key = urls;
-        String result = ( String)session.getAttribute( key);
+        String result = null;//( String)session.getAttribute( key);
         if (result == null || result.length() == 0) {
            result = feeds( track, site, urls);
            session.setAttribute( key, result);
@@ -90,36 +91,45 @@ public class FeedsRestProvider {
             } catch (Exception e) {
                 throw new JMIException( "openConnections", e);
             }
-            List<StartTag> tags = ((Segment)source.findAllElements( "head").get( 0)).findAllStartTags( "link");
-            for( StartTag tag : tags) {
-                String type = tag.getAttributeValue( "type");
-                if( type != null && type.equalsIgnoreCase( "application/rss+xml")) {
-                    UrlHelper curFeed = new UrlHelper();
-                    String url = tag.getAttributeValue( "href");
-                    curFeed.setUrl( url.startsWith( "/") ? feed.getUrl() + url : url);
-                    curFeed.openConnections( );
-                    readXml( track, curFeed, storeHelper, titles, urls, counts);
-                    curFeed.closeConnections();
+            if( source.findAllElements( "rss").size() > 0) {
+                // C'est du RSS le content type n'est pas bon
+                readXml( track, feed.getUrl(), new ByteArrayInputStream( source.toString().getBytes()), storeHelper, titles, urls, counts);
+            }
+            else {
+                List heads = source.findAllElements( "head");
+                if( heads.size() > 0) {
+                    List<StartTag> tags = ((Segment)heads.get( 0)).findAllStartTags( "link");
+                    for( StartTag tag : tags) {
+                        String type = tag.getAttributeValue( "type");
+                        if( type != null && type.equalsIgnoreCase( "application/rss+xml")) {
+                            UrlHelper curFeed = new UrlHelper();
+                            String url = tag.getAttributeValue( "href");
+                            curFeed.setUrl( url.startsWith( "/") ? feed.getUrl() + url : url);
+                            curFeed.openConnections( );
+                            readXml( track, curFeed.getUrl(), curFeed.getStream(), storeHelper, titles, urls, counts);
+                            curFeed.closeConnections();
+                        }
+                    }
                 }
             }
         }
         else {
-            readXml( track, feed, storeHelper, titles, urls, counts);
+            readXml( track, feed.getUrl(), feed.getStream(), storeHelper, titles, urls, counts);
         }
     }
     
-    private void readXml(String track, UrlHelper feed, StoreHelper storeHelper, List<String> titles, List<String> urls, List<Integer> counts) throws JMIException {
+    private void readXml(String track, String url, InputStream feed, StoreHelper storeHelper, List<String> titles, List<String> urls, List<Integer> counts) throws JMIException {
         try {
             org.jdom.input.SAXBuilder builder = new org.jdom.input.SAXBuilder(false);
-            org.jdom.Document doc = builder.build( feed.getStream());
+            org.jdom.Document doc = builder.build( feed);
             Element root = doc.getRootElement();
             
             Element top = root.getChild( "channel");
             if( top != null) {
-                parseRss2( track, feed.getUrl(), top, storeHelper, urls, titles, counts);
+                parseRss2( track, url, top, storeHelper, urls, titles, counts);
             }
             else {
-                parseAtom( track, feed.getUrl(), root, storeHelper, urls, titles, counts);
+                parseAtom( track, url, root, storeHelper, urls, titles, counts);
             }
         } catch (Exception e) {
             throw new JMIException( "openConnections", e);
