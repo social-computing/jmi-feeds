@@ -104,7 +104,14 @@ public class FeedsRestProvider {
                         if( type != null && type.equalsIgnoreCase( "application/rss+xml")) {
                             UrlHelper curFeed = new UrlHelper();
                             String url = tag.getAttributeValue( "href");
-                            curFeed.setUrl( url.startsWith( "/") ? feed.getUrl() + url : url);
+                            if( url.startsWith( "/")) {
+                                int pos = feed.getUrl().substring(10).indexOf('/');
+                                if( pos == -1)
+                                    url = feed.getUrl() + url;
+                                else
+                                    url = feed.getUrl().substring(0,pos+10) + url;
+                            }
+                            curFeed.setUrl( url);
                             curFeed.openConnections( );
                             readXml( track, curFeed.getUrl(), curFeed.getStream(), storeHelper, titles, urls, counts);
                             curFeed.closeConnections();
